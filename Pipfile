@@ -5,8 +5,10 @@ name = "pypi"
 
 [packages]
 flask = "2.3.2"
-flask-restful = "*"
-flask-sqlalchemy = "*"
+flask-restful = "0.3.10"
+flask-sqlalchemy = "3.0.3"
+flask-migrate = "4.0.4"
+ipdb = "*"
 
 [dev-packages]
 
