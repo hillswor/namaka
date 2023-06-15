@@ -11,3 +11,11 @@ class HelloWorld(Resource):
 
 
 api.add_resource(HelloWorld, "/")
+
+
+class HelloName(Resource):
+    def get(self, name):
+        return {"hello": name}
+
+
+api.add_resource(HelloName, "/<string:name>")
