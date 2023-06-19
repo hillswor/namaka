@@ -2,19 +2,18 @@ import Image from "next/image";
 
 export default function navbar() {
   return (
-    <nav className="flex bg-zinc-600 ">
-      <div className="p-0 border-2 border-red-500">
-        <Image
-          src="/namaka-main-logo.svg"
-          alt="Nakama Logo"
-          width={140}
-          height={140}
-        />
-      </div>
-      <img src="/namaka-main-logo.svg" alt="Nakama Logo" />
-      <ul className="flex text-sky-100">
+    <nav className="flex justify-between bg-zinc-500 p-2">
+      <Image
+        src="/namaka-transparent.svg"
+        alt="Nakama Logo"
+        width={100}
+        height={100}
+      />
+      <ul className="flex items-end space-x-4 text-sky-100">
         <li>
-          <a href="/">Home</a>
+          <a href="/" className="hover:text-red-500 active:text-red-500">
+            Home
+          </a>
         </li>
         <li>
           <a href="/Login">Login</a>
