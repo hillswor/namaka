@@ -6,7 +6,14 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "namaka-blue": "#CAEBF2",
+        "namaka-gray": "#A9A9A9",
+        "namaka-red": "#FF3B3F",
+        "namaka-white": "#EFEFEF",
+      },
+    },
   },
   plugins: [],
 };

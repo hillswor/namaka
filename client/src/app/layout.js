@@ -1,8 +1,11 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Anton } from "next/font/google";
 import Navbar from "./navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const anton = Anton({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "NĀMAKA",
@@ -12,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-neutral-300">
+      <body className={`bg-namaka-white ${anton.className}`}>
         <Navbar />
         {children}
       </body>
