@@ -1,9 +1,30 @@
 "use client";
+import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:5555/check-session")
+      .then((response) => {
+        if (response.status === 200) {
+          setActive(true);
+          console.log("active");
+        } else {
+          setActive(false);
+          console.log("inactive");
+          throw new Error("Not logged in");
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const navStyling = "flex justify-between bg-zinc-500 border-b-4";
   const ulStyling = "flex items-end space-x-6 text-namaka-blue text-lg pr-6";
@@ -12,23 +33,25 @@ export default function Navbar() {
 
   return active ? (
     <nav className={navStyling}>
-      <Image
-        src="/namaka-transparent.svg"
-        alt="Nakama Logo"
-        width={100}
-        height={100}
-        className={logoStyling}
-      />
+      <Link href="/">
+        <Image
+          src="/namaka-transparent.svg"
+          alt="Nakama Logo"
+          width={100}
+          height={100}
+          className={logoStyling}
+        />
+      </Link>
       <ul className={ulStyling}>
         <li>
-          <a href="/myaccount" className={linkStyling}>
+          <Link href="/myaccount" className={linkStyling}>
             My Account
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/messageboard" className={linkStyling}>
+          <Link href="/messageboard" className={linkStyling}>
             Message Board
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>
@@ -43,14 +66,14 @@ export default function Navbar() {
       />
       <ul className={ulStyling}>
         <li>
-          <a href="/myaccount" className={linkStyling}>
+          <Link href="/login" className={linkStyling}>
             Login
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/messageboard" className={linkStyling}>
+          <Link href="/signup" className={linkStyling}>
             Sign Up
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>

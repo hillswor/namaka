@@ -18,6 +18,7 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.json.compact = False
+    app.secret_key = os.getenv("SECRET_KEY")
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -50,11 +51,23 @@ class UserResource(Resource):
         )
         db.session.add(new_user)
         db.session.commit()
+        session["user_id"] = new_user.id
 
         return make_response(jsonify(new_user.to_dict()), 201)
 
 
 api.add_resource(UserResource, "/users")
+
+
+class CheckSession(Resource):
+    def get(self):
+        if session.get("user_id"):
+            user = User.query.get(session["user_id"])
+            return make_response(jsonify(user.to_dict()), 200)
+        return make_response(jsonify({"message": "No user logged in."}), 401)
+
+
+api.add_resource(CheckSession, "/check-session")
 
 
 if __name__ == "__main__":
