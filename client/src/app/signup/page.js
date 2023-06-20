@@ -2,16 +2,69 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+const stateCodes = [
+  "AL",
+  "AK",
+  "AZ",
+  "AR",
+  "CA",
+  "CO",
+  "CT",
+  "DE",
+  "FL",
+  "GA",
+  "HI",
+  "ID",
+  "IL",
+  "IN",
+  "IA",
+  "KS",
+  "KY",
+  "LA",
+  "ME",
+  "MD",
+  "MA",
+  "MI",
+  "MN",
+  "MS",
+  "MO",
+  "MT",
+  "NE",
+  "NV",
+  "NH",
+  "NJ",
+  "NM",
+  "NY",
+  "NC",
+  "ND",
+  "OH",
+  "OK",
+  "OR",
+  "PA",
+  "RI",
+  "SC",
+  "SD",
+  "TN",
+  "TX",
+  "UT",
+  "VT",
+  "VA",
+  "WA",
+  "WV",
+  "WI",
+  "WY",
+];
+
 const SignupSchema = Yup.object().shape({
   username: Yup.string()
     .required("Required")
-    .min(8, "Must be at least 8 characters")
-    .max(20, "Must be 20 characters or less"),
+    .min(6, "Must be at least 6 characters")
+    .max(30, "Must be 30 characters or less"),
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
     .required("Required")
-    .min(8, "Must be at least 8 characters")
-    .max(20, "Must be 20 characters or less"),
+    .min(12, "Must be at least 12 characters")
+    .max(40, "Must be 40 characters or less"),
   confirmPassword: Yup.string()
     .required("Required")
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
@@ -21,7 +74,9 @@ const SignupSchema = Yup.object().shape({
     .max(50, "Must be 50 characters or less"),
   state: Yup.string()
     .required("Required")
-    .length(2, "State code must be 2 characters"),
+    .length(2, "State code must be 2 characters")
+    .transform((value) => value.toUpperCase())
+    .oneOf(stateCodes, "Invalid state code"),
 });
 
 export default function Signup() {
@@ -45,7 +100,15 @@ export default function Signup() {
     },
     validationSchema: SignupSchema,
     onSubmit: (values, { resetForm }) => {
-      alert(JSON.stringify(values));
+      fetch("http://127.0.0.1:5555/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
       resetForm();
     },
   });
