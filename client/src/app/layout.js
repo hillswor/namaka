@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Anton } from "next/font/google";
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 
 const anton = Anton({
   weight: "400",
