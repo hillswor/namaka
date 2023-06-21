@@ -37,14 +37,12 @@ class UserResource(Resource):
 
     def post(self):
         data = request.get_json()
-        username = data.get("username")
         email = data.get("email")
         password = data.get("password")
         city = data.get("city")
         state = data.get("state")
 
         new_user = User(
-            username=username,
             email=email,
             password=generate_password_hash(password),
             city=city.title(),
