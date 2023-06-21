@@ -59,6 +59,20 @@ class UserResource(Resource):
 api.add_resource(UserResource, "/users")
 
 
+class Login(Resource):
+    def post(self):
+        data = request.get_json()
+        email = data.get("email")
+        password = data.get("password")
+
+        user = User.query.filter_by(email=email).first()
+
+        if user and check_password_hash(user.password, password):
+            session["user_id"] = user.id
+            return make_response(jsonify(user.to_dict()), 200)
+        return make_response(jsonify({"message": "Unauthorized"}), 401)
+
+
 class CheckSession(Resource):
     def get(self):
         if session.get("user_id"):
