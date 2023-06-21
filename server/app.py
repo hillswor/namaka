@@ -2,7 +2,7 @@ from flask import Flask, request, session, make_response, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource
-from flask_bcrypt import check_password_hash, generate_password_hash
+from flask_bcrypt import check_password_hash
 from dotenv import load_dotenv
 import os
 import ipdb
@@ -44,10 +44,11 @@ class UserResource(Resource):
 
         new_user = User(
             email=email,
-            password=generate_password_hash(password),
+            password=password,
             city=city.title(),
             state=state.upper(),
         )
+        new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
         session["user_id"] = new_user.id
@@ -69,7 +70,7 @@ class Login(Resource):
         if user and check_password_hash(user.password, password):
             session["user_id"] = user.id
             return make_response(jsonify(user.to_dict()), 200)
-        return make_response(jsonify({"message": "Unauthorized"}), 401)
+        return make_response(jsonify({"error": "Invalid email or password"}), 401)
 
 
 api.add_resource(Login, "/login")

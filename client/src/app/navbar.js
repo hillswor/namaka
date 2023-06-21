@@ -40,6 +40,9 @@ export default function Navbar() {
           width={100}
           height={100}
           className={logoStyling}
+          priority={true}
+          placeholder="blur"
+          blurDataURL="/namaka-transparent.svg"
         />
       </Link>
       <ul className={ulStyling}>

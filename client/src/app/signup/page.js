@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -84,6 +85,7 @@ export default function Signup() {
   const buttonStyling =
     "bg-zinc-500 text-namaka-blue px-4 py-2 rounded-md hover:text-namaka-red transition-all duration-200 border-2 border-namaka-blue hover:border-namaka-red";
   const errorStyling = "bg-red-200 text-namaka-red p-2 mb-2 rounded";
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -104,7 +106,9 @@ export default function Signup() {
         body: JSON.stringify(values),
       })
         .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then((data) => {
+          router.push(`/users/${data.id}`);
+        });
       resetForm();
     },
   });
