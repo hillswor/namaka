@@ -17,8 +17,13 @@ export default function Login() {
       password: "",
     },
     onSubmit: (values, { resetForm }) => {
-      // Submit logic
-      console.log(values);
+      fetch("http://127.0.0.1:5555/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
       resetForm();
     },
   });

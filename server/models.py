@@ -95,7 +95,6 @@ class User(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "username": self.username,
             "email": self.email,
             "city": self.city,
             "state": self.state,
@@ -104,4 +103,4 @@ class User(db.Model):
         }
 
     def __repr__(self):
-        return f"<User {self.username}>"
+        return f"<User {self.id} {self.email}>"
