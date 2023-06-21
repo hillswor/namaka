@@ -56,10 +56,6 @@ const stateCodes = [
 ];
 
 const SignupSchema = Yup.object().shape({
-  username: Yup.string()
-    .required("Required")
-    .min(6, "Must be at least 6 characters")
-    .max(30, "Must be 30 characters or less"),
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
     .required("Required")
@@ -91,7 +87,6 @@ export default function Signup() {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -116,20 +111,6 @@ export default function Signup() {
 
   return (
     <form onSubmit={formik.handleSubmit} className={formStyling}>
-      <label htmlFor="username" className={labelStyling}>
-        Username
-      </label>
-      <input
-        id="username"
-        name="username"
-        type="username"
-        onChange={formik.handleChange}
-        value={formik.values.username}
-        className={inputStyling}
-      />
-      {formik.errors.username && formik.touched.username ? (
-        <div className={errorStyling}>{formik.errors.username}</div>
-      ) : null}
       <label htmlFor="email" className={labelStyling}>
         Email Address
       </label>

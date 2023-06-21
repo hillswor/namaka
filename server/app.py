@@ -5,6 +5,7 @@ from flask_restful import Api, Resource
 from flask_bcrypt import check_password_hash, generate_password_hash
 from dotenv import load_dotenv
 import os
+import ipdb
 
 from models import User
 from extensions import db, migrate
@@ -71,6 +72,9 @@ class Login(Resource):
             session["user_id"] = user.id
             return make_response(jsonify(user.to_dict()), 200)
         return make_response(jsonify({"message": "Unauthorized"}), 401)
+
+
+api.add_resource(Login, "/login")
 
 
 class CheckSession(Resource):
