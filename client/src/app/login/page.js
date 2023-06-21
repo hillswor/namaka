@@ -1,7 +1,65 @@
-export default function page() {
+"use client";
+import { useFormik } from "formik";
+
+export default function Login() {
+  const formStyling =
+    "flex flex-col items-center justify-center border-4 border-namaka-blue rounded-md max-w-xl m-auto p-8 mt-16";
+  const labelStyling = "block text-zinc-500 text-lg mb-2";
+  const inputStyling =
+    "border-4 border-namaka-blue rounded-md px-4 py-2 mb-4 w-full";
+  const buttonStyling =
+    "bg-zinc-500 text-namaka-blue px-4 py-2 rounded-md hover:text-namaka-red transition-all duration-200 border-2 border-namaka-blue hover:border-namaka-red";
+  const errorStyling = "bg-red-200 text-namaka-red p-2 mb-2 rounded";
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: (values, { resetForm }) => {
+      // Submit logic
+      console.log(values);
+      resetForm();
+    },
+  });
+
   return (
-    <div>
-      <h1>Login</h1>
-    </div>
+    <form onSubmit={formik.handleSubmit} className={formStyling}>
+      <label htmlFor="email" className={labelStyling}>
+        Email Address
+      </label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values.email}
+        className={inputStyling}
+      />
+      {formik.touched.email && formik.errors.email && (
+        <div className={errorStyling}>{formik.errors.email}</div>
+      )}
+
+      <label htmlFor="password" className={labelStyling}>
+        Password
+      </label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        value={formik.values.password}
+        className={inputStyling}
+      />
+      {formik.touched.password && formik.errors.password && (
+        <div className={errorStyling}>{formik.errors.password}</div>
+      )}
+
+      <button type="submit" className={buttonStyling}>
+        Log In
+      </button>
+    </form>
   );
 }
