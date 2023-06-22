@@ -3,14 +3,33 @@ import Link from "next/link";
 import Image from "next/image";
 import { useContext } from "react";
 import { UserContext } from "./UserContext";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const router = useRouter();
 
   const navStyling = "flex justify-between bg-zinc-500 border-b-4";
   const ulStyling = "flex items-end space-x-6 text-namaka-blue text-lg pr-6";
   const linkStyling = "hover:text-namaka-red active:text-namaka-red";
   const logoStyling = "hover:opacity-50 active:opacity-50 cursor-pointer pl-2";
+
+  const handleLogout = () => {
+    fetch("http://127.0.0.1:5555/logout", {
+      method: "DELETE",
+      credentials: "include",
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setUser(null);
+        } else {
+          throw new Error("Unable to logout");
+        }
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
 
   return user ? (
     <nav className={navStyling}>
@@ -37,6 +56,7 @@ export default function Navbar() {
             Message Board
           </Link>
         </li>
+        <li onClick={handleLogout}>Logout</li>
       </ul>
     </nav>
   ) : (

@@ -3,33 +3,41 @@
 import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useRouter } from "next/navigation";
 
 import { UserContext } from "../../UserContext";
 
 const AquariumSchema = Yup.object().shape({
   brand: Yup.string().required("Required"),
+  model: Yup.string().required("Required"),
   volume: Yup.number().required("Required"),
 });
 
 export default function UserPage() {
   const { user } = useContext(UserContext);
   const [showForm, setShowForm] = useState(false);
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
       brand: "",
+      model: "",
       volume: "",
-      userId: user.id, // include user id in the initial values
     },
     validationSchema: AquariumSchema,
     onSubmit: (values, { resetForm }) => {
+      values.owner_id = user.id;
       fetch("http://127.0.0.1:5555/aquariums", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
-      });
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
       resetForm();
       setShowForm(false);
     },
@@ -51,7 +59,7 @@ export default function UserPage() {
       </button>
       <form onSubmit={formik.handleSubmit} className={formStyling}>
         <label htmlFor="brand" className={labelStyling}>
-          Aquarium Brand
+          Brand
         </label>
         <input
           id="brand"
@@ -65,8 +73,23 @@ export default function UserPage() {
           <div className={errorStyling}>{formik.errors.brand}</div>
         ) : null}
 
+        <label htmlFor="model" className={labelStyling}>
+          Model
+        </label>
+        <input
+          id="model"
+          name="model"
+          type="text"
+          onChange={formik.handleChange}
+          value={formik.values.model}
+          className={inputStyling}
+        />
+        {formik.errors.model && formik.touched.model ? (
+          <div className={errorStyling}>{formik.errors.model}</div>
+        ) : null}
+
         <label htmlFor="volume" className={labelStyling}>
-          Aquarium Volume
+          Volume
         </label>
         <input
           id="volume"
@@ -74,6 +97,7 @@ export default function UserPage() {
           type="number"
           onChange={formik.handleChange}
           value={formik.values.volume}
+          placeholder="in gallons"
           className={inputStyling}
         />
         {formik.errors.volume && formik.touched.volume ? (
@@ -87,9 +111,9 @@ export default function UserPage() {
     </>
   );
 
-  return (
+  return user ? (
     <div>
-      {!showForm && <h1>Hello, {user.email}</h1>}
+      {!showForm && <h1>Hello, {user.id}</h1>}
       {!showForm && (
         <button onClick={() => setShowForm(true)} className={buttonStyling}>
           Add Aquarium
@@ -97,5 +121,7 @@ export default function UserPage() {
       )}
       {showForm && form}
     </div>
+  ) : (
+    router.push("/")
   );
 }

@@ -4,10 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource
 from flask_bcrypt import check_password_hash
 from dotenv import load_dotenv
+from datetime import timedelta
 import os
 import ipdb
 
-from models import User
+from models import User, Aquarium
 from extensions import db, migrate
 
 load_dotenv()
@@ -15,11 +16,17 @@ load_dotenv()
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+
+    CORS(app, resources={r"/*": {"origins": "*", "supports_credentials": True}})
+
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.json.compact = False
     app.secret_key = os.getenv("SECRET_KEY")
+
+    app.config["SESSION_COOKIE_SECURE"] = False
+    app.config["SESSION_PERMANENT"] = True
+    app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=1)
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -76,6 +83,15 @@ class Login(Resource):
 api.add_resource(Login, "/login")
 
 
+class Logout(Resource):
+    def delete(self):
+        session.clear()
+        return make_response(jsonify({"message": "Logged out"}), 200)
+
+
+api.add_resource(Logout, "/logout")
+
+
 class CheckSession(Resource):
     def get(self):
         if session.get("user_id"):
@@ -86,6 +102,32 @@ class CheckSession(Resource):
 
 api.add_resource(CheckSession, "/check-session")
 
+# Aquarium routes
+
+
+class AquariumResource(Resource):
+    def get(self):
+        pass
+
+    def post(self):
+        data = request.get_json()
+        owner_id = data.get("owner_id")
+        brand = data.get("brand")
+        model = data.get("model")
+        volume = data.get("volume")
+
+        new_aquarium = Aquarium(
+            owner_id=owner_id, brand=brand, model=model, volume=volume
+        )
+
+        db.session.add(new_aquarium)
+        db.session.commit()
+        return make_response(jsonify(new_aquarium.to_dict()), 201)
+
+
+api.add_resource(AquariumResource, "/aquariums")
+
 
 if __name__ == "__main__":
-    app.run(port=5555, debug=True)
+    with app.app_context():
+        app.run(port=5555, debug=True)

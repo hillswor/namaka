@@ -109,6 +109,7 @@ export default function Signup() {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           setUser(data);
           router.push(`/users/${data.id}`);
         });

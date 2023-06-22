@@ -31,9 +31,22 @@ export default function Login() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
-      });
-      setUser(values);
-      router.push(`/users/${values.id}`);
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          } else if (res.status === 401) {
+            throw new Error("Invalid credentials");
+          }
+        })
+        .then((data) => {
+          setUser(data);
+          router.push(`/users/${data.id}`);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+
       resetForm();
     },
   });

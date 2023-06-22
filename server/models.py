@@ -118,6 +118,7 @@ class Aquarium(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     brand = db.Column(db.String(120))
+    model = db.Column(db.String(120))
     volume = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(
@@ -132,13 +133,14 @@ class Aquarium(db.Model):
             "id": self.id,
             "owner_id": self.owner_id,
             "brand": self.brand,
+            "model": self.model,
             "volume": self.volume,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }
 
     def __repr__(self):
-        return f"<Aquarium {self.id} {self.brand} {self.volume}>"
+        return f"<Aquarium {self.id} {self.brand} {self.model} {self.volume}>"
 
 
 class UserAquarium(db.Model):
