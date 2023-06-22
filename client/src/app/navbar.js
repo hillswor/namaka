@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import { UserContext } from "./UserContext";
 
 export default function Navbar() {

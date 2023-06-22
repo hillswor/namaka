@@ -2,11 +2,13 @@
 
 import { useFormik } from "formik";
 import { useContext } from "react";
+import { useRouter } from "next/navigation";
 
 import { UserContext } from "../UserContext";
 
 export default function Login() {
   const { user, setUser } = useContext(UserContext);
+  const router = useRouter();
 
   const formStyling =
     "flex flex-col items-center justify-center border-4 border-namaka-blue rounded-md max-w-xl m-auto p-8 mt-16";
@@ -31,6 +33,7 @@ export default function Login() {
         body: JSON.stringify(values),
       });
       setUser(values);
+      router.push(`/users/${values.id}`);
       resetForm();
     },
   });
