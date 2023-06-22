@@ -19,10 +19,17 @@ export default function UserPage() {
     initialValues: {
       brand: "",
       volume: "",
+      userId: user.id, // include user id in the initial values
     },
     validationSchema: AquariumSchema,
     onSubmit: (values, { resetForm }) => {
-      // Handle form submission here...
+      fetch("http://127.0.0.1:5555/aquariums", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
       resetForm();
       setShowForm(false);
     },
@@ -38,49 +45,56 @@ export default function UserPage() {
   const errorStyling = "bg-red-200 text-namaka-red p-2 mb-2 rounded";
 
   const form = (
-    <form onSubmit={formik.handleSubmit} className={formStyling}>
-      <label htmlFor="brand" className={labelStyling}>
-        Aquarium Brand
-      </label>
-      <input
-        id="brand"
-        name="brand"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.brand}
-        className={inputStyling}
-      />
-      {formik.errors.brand && formik.touched.brand ? (
-        <div className={errorStyling}>{formik.errors.brand}</div>
-      ) : null}
-
-      <label htmlFor="volume" className={labelStyling}>
-        Aquarium Volume
-      </label>
-      <input
-        id="volume"
-        name="volume"
-        type="number"
-        onChange={formik.handleChange}
-        value={formik.values.volume}
-        className={inputStyling}
-      />
-      {formik.errors.volume && formik.touched.volume ? (
-        <div className={errorStyling}>{formik.errors.volume}</div>
-      ) : null}
-
-      <button type="submit" className={buttonStyling}>
-        Submit
+    <>
+      <button onClick={() => setShowForm(false)} className={buttonStyling}>
+        Back
       </button>
-    </form>
+      <form onSubmit={formik.handleSubmit} className={formStyling}>
+        <label htmlFor="brand" className={labelStyling}>
+          Aquarium Brand
+        </label>
+        <input
+          id="brand"
+          name="brand"
+          type="text"
+          onChange={formik.handleChange}
+          value={formik.values.brand}
+          className={inputStyling}
+        />
+        {formik.errors.brand && formik.touched.brand ? (
+          <div className={errorStyling}>{formik.errors.brand}</div>
+        ) : null}
+
+        <label htmlFor="volume" className={labelStyling}>
+          Aquarium Volume
+        </label>
+        <input
+          id="volume"
+          name="volume"
+          type="number"
+          onChange={formik.handleChange}
+          value={formik.values.volume}
+          className={inputStyling}
+        />
+        {formik.errors.volume && formik.touched.volume ? (
+          <div className={errorStyling}>{formik.errors.volume}</div>
+        ) : null}
+
+        <button type="submit" className={buttonStyling}>
+          Submit
+        </button>
+      </form>
+    </>
   );
 
   return (
     <div>
-      <h1>Hello, {user.email}</h1>
-      <button onClick={() => setShowForm(!showForm)} className={buttonStyling}>
-        Add Aquarium
-      </button>
+      {!showForm && <h1>Hello, {user.email}</h1>}
+      {!showForm && (
+        <button onClick={() => setShowForm(true)} className={buttonStyling}>
+          Add Aquarium
+        </button>
+      )}
       {showForm && form}
     </div>
   );
