@@ -19,6 +19,17 @@ export default function UserPage() {
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
 
+  const formStyling =
+    "flex flex-col items-center justify-center border-4 border-namaka-blue rounded-md max-w-xl m-auto p-8 mt-16";
+  const labelStyling = "block text-zinc-500 text-lg mb-2";
+  const inputStyling =
+    "border-4 border-namaka-blue rounded-md px-4 py-2 mb-4 w-full";
+  const buttonStyling =
+    "bg-zinc-500 text-namaka-blue px-4 py-2 rounded-md hover:text-namaka-red transition-all duration-200 border-2 border-namaka-blue hover:border-namaka-red";
+  const errorStyling = "bg-red-200 text-namaka-red p-2 mb-2 rounded";
+  const aquariumStyling =
+    "flex items-center space-x-4 border-2 border-gray-200 rounded-lg p-2 mt-4";
+
   const formik = useFormik({
     initialValues: {
       brand: "",
@@ -44,17 +55,6 @@ export default function UserPage() {
       setShowForm(false);
     },
   });
-
-  const formStyling =
-    "flex flex-col items-center justify-center border-4 border-namaka-blue rounded-md max-w-xl m-auto p-8 mt-16";
-  const labelStyling = "block text-zinc-500 text-lg mb-2";
-  const inputStyling =
-    "border-4 border-namaka-blue rounded-md px-4 py-2 mb-4 w-full";
-  const buttonStyling =
-    "bg-zinc-500 text-namaka-blue px-4 py-2 rounded-md hover:text-namaka-red transition-all duration-200 border-2 border-namaka-blue hover:border-namaka-red";
-  const errorStyling = "bg-red-200 text-namaka-red p-2 mb-2 rounded";
-  const aquariumStyling =
-    "flex items-center space-x-4 border-2 border-gray-200 rounded-lg p-2 mt-4";
 
   const form = (
     <>
