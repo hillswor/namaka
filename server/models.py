@@ -75,7 +75,7 @@ class User(db.Model):
         db.DateTime, server_default=db.func.now(), onupdate=db.func.now()
     )
 
-    owned_aquariums = db.relationship("Aquarium", backref="owner", lazy="dynamic")
+    aquariums = db.relationship("Aquarium", backref="owner", lazy="dynamic")
     shared_aquariums = db.relationship("UserAquarium", back_populates="user")
     posts = db.relationship("Post", backref="user", lazy="dynamic")
     comments = db.relationship("Comment", backref="user", lazy="dynamic")
@@ -106,6 +106,7 @@ class User(db.Model):
             "state": self.state,
             "created_at": self.created_at,
             "last_login": self.last_login,
+            "aquariums": [aquarium.to_dict() for aquarium in self.aquariums],
         }
 
     def __repr__(self):
