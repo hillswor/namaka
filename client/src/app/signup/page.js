@@ -1,7 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
+import { useContext } from "react";
 import * as Yup from "yup";
+
+import { UserContext } from "../UserContext";
 
 const stateCodes = [
   "AL",
@@ -58,10 +61,7 @@ const stateCodes = [
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string()
-    .required("Required")
-    .min(12, "Must be at least 12 characters")
-    .max(40, "Must be 40 characters or less"),
+  password: Yup.string().required("Required"),
   confirmPassword: Yup.string()
     .required("Required")
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
@@ -77,6 +77,8 @@ const SignupSchema = Yup.object().shape({
 });
 
 export default function Signup() {
+  const { setUser } = useContext(UserContext);
+
   const formStyling =
     "flex flex-col items-center justify-center border-4 border-namaka-blue rounded-md max-w-xl m-auto p-8 mt-16";
   const labelStyling = "block text-zinc-500 text-lg mb-2";
@@ -107,6 +109,7 @@ export default function Signup() {
       })
         .then((res) => res.json())
         .then((data) => {
+          setUser(data);
           router.push(`/users/${data.id}`);
         });
       resetForm();

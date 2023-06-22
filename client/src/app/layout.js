@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Anton } from "next/font/google";
 import Navbar from "./navbar";
+import UserProvider from "./UserContext";
 
 const anton = Anton({
   weight: "400",
@@ -16,8 +17,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`bg-namaka-white ${anton.className}`}>
-        <Navbar />
-        {children}
+        <UserProvider>
+          <Navbar />
+          {children}
+        </UserProvider>
       </body>
     </html>
   );

@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
+from sqlalchemy.ext.associationproxy import association_proxy
 from flask_bcrypt import Bcrypt
 import re
 
@@ -74,6 +75,11 @@ class User(db.Model):
         db.DateTime, server_default=db.func.now(), onupdate=db.func.now()
     )
 
+    owned_aquariums = db.relationship("Aquarium", backref="owner", lazy="dynamic")
+    shared_aquariums = db.relationship("UserAquarium", back_populates="user")
+    posts = db.relationship("Post", backref="user", lazy="dynamic")
+    comments = db.relationship("Comment", backref="user", lazy="dynamic")
+
     @validates("email")
     def validate_email(self, key, email):
         if not re.match(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", email):
@@ -104,3 +110,155 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.id} {self.email}>"
+
+
+class Aquarium(db.Model):
+    __tablename__ = "aquariums"
+
+    id = db.Column(db.Integer, primary_key=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    brand = db.Column(db.String(120))
+    volume = db.Column(db.Integer)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(
+        db.DateTime, server_default=db.func.now(), onupdate=db.func.now()
+    )
+
+    shared_users = db.relationship("UserAquarium", back_populates="aquarium")
+    water_parameters = db.relationship("WaterParameter", backref="aquarium")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "owner_id": self.owner_id,
+            "brand": self.brand,
+            "volume": self.volume,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }
+
+    def __repr__(self):
+        return f"<Aquarium {self.id} {self.brand} {self.volume}>"
+
+
+class UserAquarium(db.Model):
+    __tablename__ = "user_aquariums"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    aquarium_id = db.Column(db.Integer, db.ForeignKey("aquariums.id"))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(
+        db.DateTime, server_default=db.func.now(), onupdate=db.func.now()
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint("user_id", "aquarium_id", name="uq_user_aquarium"),
+    )
+
+    user = db.relationship("User", back_populates="shared_aquariums")
+    aquarium = db.relationship("Aquarium", back_populates="shared_users")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "aquarium_id": self.aquarium_id,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }
+
+    def __repr__(self):
+        return f"<UserAquarium {self.id} {self.user_id} {self.aquarium_id}>"
+
+
+class WaterParameter(db.Model):
+    __tablename__ = "water_parameters"
+
+    id = db.Column(db.Integer, primary_key=True)
+    aquarium_id = db.Column(db.Integer, db.ForeignKey("aquariums.id"))
+    ph = db.Column(db.Float)
+    ammonia = db.Column(db.Float)
+    nitrite = db.Column(db.Float)
+    nitrate = db.Column(db.Float)
+    phosphate = db.Column(db.Float)
+    calcium = db.Column(db.Float)
+    magnesium = db.Column(db.Float)
+    alkalinity = db.Column(db.Float)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(
+        db.DateTime, server_default=db.func.now(), onupdate=db.func.now()
+    )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "aquarium_id": self.aquarium_id,
+            "ph": self.ph,
+            "ammonia": self.ammonia,
+            "nitrite": self.nitrite,
+            "nitrate": self.nitrate,
+            "phosphate": self.phosphate,
+            "calcium": self.calcium,
+            "magnesium": self.magnesium,
+            "alkalinity": self.alkalinity,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }
+
+    def __repr__(self):
+        return f"<Parameters {self.id} {self.aquarium_id} {self.ph} {self.ammonia} {self.nitrite} {self.nitrate} {self.phosphate} {self.calcium} {self.magnesium} {self.alkalinity}>"
+
+
+class Post(db.Model):
+    __tablename__ = "posts"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    title = db.Column(db.String(120))
+    content = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(
+        db.DateTime, server_default=db.func.now(), onupdate=db.func.now()
+    )
+
+    comments = db.relationship("Comment", backref="post")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "title": self.title,
+            "content": self.content,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }
+
+    def __repr__(self):
+        return f"<Post {self.id} {self.user_id} {self.title}>"
+
+
+class Comment(db.Model):
+    __tablename__ = "comments"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    post_id = db.Column(db.Integer, db.ForeignKey("posts.id"))
+    content = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(
+        db.DateTime, server_default=db.func.now(), onupdate=db.func.now()
+    )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "post_id": self.post_id,
+            "content": self.content,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }
+
+    def __repr__(self):
+        return f"<Comment {self.id} {self.user_id} {self.post_id}>"

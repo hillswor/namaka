@@ -1,7 +1,13 @@
 "use client";
+
 import { useFormik } from "formik";
+import { useContext } from "react";
+
+import { UserContext } from "../UserContext";
 
 export default function Login() {
+  const { user, setUser } = useContext(UserContext);
+
   const formStyling =
     "flex flex-col items-center justify-center border-4 border-namaka-blue rounded-md max-w-xl m-auto p-8 mt-16";
   const labelStyling = "block text-zinc-500 text-lg mb-2";
@@ -24,6 +30,7 @@ export default function Login() {
         },
         body: JSON.stringify(values),
       });
+      setUser(values);
       resetForm();
     },
   });
