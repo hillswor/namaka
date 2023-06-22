@@ -11,7 +11,8 @@ export default function Navbar() {
 
   const navStyling = "flex justify-between bg-zinc-500 border-b-4";
   const ulStyling = "flex items-end space-x-6 text-namaka-blue text-lg pr-6";
-  const linkStyling = "hover:text-namaka-red active:text-namaka-red";
+  const linkStyling =
+    "hover:text-namaka-red active:text-namaka-red cursor-pointer";
   const logoStyling = "hover:opacity-50 active:opacity-50 cursor-pointer pl-2";
 
   const handleLogout = () => {
@@ -56,7 +57,9 @@ export default function Navbar() {
             Message Board
           </Link>
         </li>
-        <li onClick={handleLogout}>Logout</li>
+        <li onClick={handleLogout} className={linkStyling}>
+          Logout
+        </li>
       </ul>
     </nav>
   ) : (

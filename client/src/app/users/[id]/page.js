@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 import { UserContext } from "../../UserContext";
 
@@ -14,7 +15,7 @@ const AquariumSchema = Yup.object().shape({
 });
 
 export default function UserPage() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
 
@@ -36,7 +37,8 @@ export default function UserPage() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          const updatedUser = { ...user, aquariums: [...user.aquariums, data] };
+          setUser(updatedUser);
         });
       resetForm();
       setShowForm(false);
@@ -51,6 +53,8 @@ export default function UserPage() {
   const buttonStyling =
     "bg-zinc-500 text-namaka-blue px-4 py-2 rounded-md hover:text-namaka-red transition-all duration-200 border-2 border-namaka-blue hover:border-namaka-red";
   const errorStyling = "bg-red-200 text-namaka-red p-2 mb-2 rounded";
+  const aquariumStyling =
+    "flex items-center space-x-4 border-2 border-gray-200 rounded-lg p-2 mt-4";
 
   const form = (
     <>
@@ -112,14 +116,47 @@ export default function UserPage() {
   );
 
   return user ? (
-    <div>
-      {!showForm && <h1>Hello, {user.id}</h1>}
+    <div className="flex flex-col items-center">
+      <h1 className="text-3xl font-bold mt-8">Hello, {user.id}</h1>
       {!showForm && (
-        <button onClick={() => setShowForm(true)} className={buttonStyling}>
+        <button
+          onClick={() => setShowForm(true)}
+          className={`${buttonStyling} mt-4`}
+        >
           Add Aquarium
         </button>
       )}
       {showForm && form}
+      {user.aquariums.length > 0 ? (
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold mb-2">Your Aquariums</h2>
+          <ul className="list-inside">
+            {user.aquariums.map((aquarium) => (
+              <li key={aquarium.id} className={aquariumStyling}>
+                <div className="flex-shrink-0">
+                  <Image src="/reef-tank.jpeg" width={100} height={100} />
+                </div>
+                <div>
+                  <div className="flex items-center">
+                    <span className="font-bold">Brand:</span> {aquarium.brand}
+                  </div>
+                  <div className="flex items-center">
+                    <span className="font-bold">Model:</span> {aquarium.model}
+                  </div>
+                  <div className="flex items-center">
+                    <span className="font-bold">Volume:</span> {aquarium.volume}
+                  </div>
+                  <button className={`${buttonStyling} mt-2`}>
+                    Parameters
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p className="text-lg mt-8">You currently have no aquariums.</p>
+      )}
     </div>
   ) : (
     router.push("/")
