@@ -15,5 +15,22 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addComponents }) {
+      addComponents({
+        ".number-input": {
+          "-webkit-appearance": "none",
+          "-moz-appearance": "textfield",
+          "&::-webkit-outer-spin-button": {
+            "-webkit-appearance": "none",
+            margin: "0",
+          },
+          "&::-webkit-inner-spin-button": {
+            "-webkit-appearance": "none",
+            margin: "0",
+          },
+        },
+      });
+    },
+  ],
 };

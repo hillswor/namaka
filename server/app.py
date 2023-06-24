@@ -91,7 +91,7 @@ api.add_resource(Logout, "/api/logout")
 class CheckSession(Resource):
     def get(self):
         if session.get("user_id"):
-            user = User.query.get(session["user_id"])
+            user = db.session.get(User, session.get("user_id"))
             return make_response(jsonify(user.to_dict()), 200)
         return make_response(jsonify({"message": "No user logged in."}), 401)
 

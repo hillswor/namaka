@@ -8,12 +8,6 @@ import Image from "next/image";
 
 import { UserContext, AquariumContext } from "../../AppContext";
 
-const AquariumSchema = Yup.object().shape({
-  brand: Yup.string().required("Required"),
-  model: Yup.string().required("Required"),
-  volume: Yup.number().required("Required"),
-});
-
 export default function UserPage() {
   const { user, setUser } = useContext(UserContext);
   const { setAquarium } = useContext(AquariumContext);
@@ -30,6 +24,12 @@ export default function UserPage() {
   const errorStyling = "bg-red-200 text-namaka-red p-2 mb-2 rounded";
   const aquariumStyling =
     "flex items-center space-x-4 border-2 border-gray-200 rounded-lg p-2 mt-4";
+
+  const AquariumSchema = Yup.object().shape({
+    brand: Yup.string().required("Required"),
+    model: Yup.string().required("Required"),
+    volume: Yup.number().required("Required"),
+  });
 
   const formik = useFormik({
     initialValues: {

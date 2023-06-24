@@ -3,6 +3,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from flask_bcrypt import Bcrypt
 import re
+from datetime import date
 
 from extensions import db
 
@@ -180,6 +181,8 @@ class WaterParameter(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     aquarium_id = db.Column(db.Integer, db.ForeignKey("aquariums.id"))
+    date_recorded = db.Column(db.Date, nullable=False, default=date.today)
+    salinity = db.Column(db.Float)
     ph = db.Column(db.Float)
     ammonia = db.Column(db.Float)
     nitrite = db.Column(db.Float)
@@ -197,6 +200,8 @@ class WaterParameter(db.Model):
         return {
             "id": self.id,
             "aquarium_id": self.aquarium_id,
+            "date_recorded": self.date_recorded,
+            "salinity": self.salinity,
             "ph": self.ph,
             "ammonia": self.ammonia,
             "nitrite": self.nitrite,
@@ -210,7 +215,7 @@ class WaterParameter(db.Model):
         }
 
     def __repr__(self):
-        return f"<Parameters {self.id} {self.aquarium_id} {self.ph} {self.ammonia} {self.nitrite} {self.nitrate} {self.phosphate} {self.calcium} {self.magnesium} {self.alkalinity}>"
+        return f"<Parameters {self.id} {self.aquarium_id} {self.salinity} {self.ph} {self.ammonia} {self.nitrite} {self.nitrate} {self.phosphate} {self.calcium} {self.magnesium} {self.alkalinity}>"
 
 
 class Post(db.Model):
