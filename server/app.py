@@ -17,16 +17,12 @@ load_dotenv()
 def create_app():
     app = Flask(__name__)
 
-    CORS(app, resources={r"/*": {"origins": "*", "supports_credentials": True}})
+    CORS(app)
 
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.json.compact = False
     app.secret_key = os.getenv("SECRET_KEY")
-
-    app.config["SESSION_COOKIE_SECURE"] = False
-    app.config["SESSION_PERMANENT"] = True
-    app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=1)
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -63,7 +59,7 @@ class UserResource(Resource):
         return make_response(jsonify(new_user.to_dict()), 201)
 
 
-api.add_resource(UserResource, "/users")
+api.add_resource(UserResource, "/api/users")
 
 
 class Login(Resource):
@@ -80,7 +76,7 @@ class Login(Resource):
         return make_response(jsonify({"error": "Invalid email or password"}), 401)
 
 
-api.add_resource(Login, "/login")
+api.add_resource(Login, "/api/login")
 
 
 class Logout(Resource):
@@ -89,7 +85,7 @@ class Logout(Resource):
         return make_response(jsonify({"message": "Logged out"}), 200)
 
 
-api.add_resource(Logout, "/logout")
+api.add_resource(Logout, "/api/logout")
 
 
 class CheckSession(Resource):
@@ -100,7 +96,7 @@ class CheckSession(Resource):
         return make_response(jsonify({"message": "No user logged in."}), 401)
 
 
-api.add_resource(CheckSession, "/check-session")
+api.add_resource(CheckSession, "/api/check-session")
 
 # Aquarium routes
 
@@ -125,7 +121,7 @@ class AquariumResource(Resource):
         return make_response(jsonify(new_aquarium.to_dict()), 201)
 
 
-api.add_resource(AquariumResource, "/aquariums")
+api.add_resource(AquariumResource, "/api/aquariums")
 
 
 if __name__ == "__main__":

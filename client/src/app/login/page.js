@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
 
-import { UserContext } from "../UserContext";
+import { UserContext } from "../AppContext";
 
 export default function Login() {
   const { user, setUser } = useContext(UserContext);
@@ -25,7 +25,7 @@ export default function Login() {
       password: "",
     },
     onSubmit: (values, { resetForm }) => {
-      fetch("http://127.0.0.1:5555/login", {
+      fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { useContext } from "react";
 import * as Yup from "yup";
 
-import { UserContext } from "../UserContext";
+import { UserContext } from "../AppContext";
 
 const stateCodes = [
   "AL",
@@ -100,7 +100,7 @@ export default function Signup() {
     validationSchema: SignupSchema,
     validateOnChange: true,
     onSubmit: (values, { resetForm }) => {
-      fetch("http://127.0.0.1:5555/users", {
+      fetch("/api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

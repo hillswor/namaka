@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Anton } from "next/font/google";
 import Navbar from "./navbar";
-import UserProvider from "./UserContext";
+import UserProvider from "./AppContext";
 
 const anton = Anton({
   weight: "400",

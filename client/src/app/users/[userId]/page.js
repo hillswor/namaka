@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import { UserContext } from "../../UserContext";
+import { UserContext, AquariumContext } from "../../AppContext";
 
 const AquariumSchema = Yup.object().shape({
   brand: Yup.string().required("Required"),
@@ -16,6 +16,7 @@ const AquariumSchema = Yup.object().shape({
 
 export default function UserPage() {
   const { user, setUser } = useContext(UserContext);
+  const { setAquarium } = useContext(AquariumContext);
   const [showForm, setShowForm] = useState(false);
   const router = useRouter();
 
@@ -39,7 +40,7 @@ export default function UserPage() {
     validationSchema: AquariumSchema,
     onSubmit: (values, { resetForm }) => {
       values.owner_id = user.id;
-      fetch("http://127.0.0.1:5555/aquariums", {
+      fetch("/api/aquariums", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -115,7 +116,12 @@ export default function UserPage() {
     </>
   );
 
-  return user ? (
+  if (!user) {
+    router.push("/login");
+    return null;
+  }
+
+  return (
     <div className="flex flex-col items-center">
       <h1 className="text-3xl font-bold mt-8">Hello, {user.id}</h1>
       {!showForm && (
@@ -134,20 +140,27 @@ export default function UserPage() {
             {user.aquariums.map((aquarium) => (
               <li key={aquarium.id} className={aquariumStyling}>
                 <div className="flex-shrink-0">
-                  <Image src="/reef-tank.jpeg" width={100} height={100} />
+                  <Image
+                    src="/reef-tank.jpeg"
+                    alt="Reef Tank"
+                    width={100}
+                    height={100}
+                  />
                 </div>
                 <div>
+                  <div className="flex items-center">{aquarium.brand}</div>
+                  <div className="flex items-center">{aquarium.model}</div>
                   <div className="flex items-center">
-                    <span className="font-bold">Brand:</span> {aquarium.brand}
+                    {aquarium.volume} gallons
                   </div>
-                  <div className="flex items-center">
-                    <span className="font-bold">Model:</span> {aquarium.model}
-                  </div>
-                  <div className="flex items-center">
-                    <span className="font-bold">Volume:</span> {aquarium.volume}
-                  </div>
-                  <button className={`${buttonStyling} mt-2`}>
-                    Parameters
+                  <button
+                    className={`${buttonStyling} mt-2`}
+                    onClick={() =>
+                      setAquarium(aquarium) &
+                      router.push(`/users/${user.id}/aquariums/${aquarium.id}`)
+                    }
+                  >
+                    View Aquarium
                   </button>
                 </div>
               </li>
@@ -158,7 +171,5 @@ export default function UserPage() {
         <p className="text-lg mt-8">You currently have no aquariums.</p>
       )}
     </div>
-  ) : (
-    router.push("/")
   );
 }
