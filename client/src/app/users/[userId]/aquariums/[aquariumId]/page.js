@@ -2,8 +2,6 @@
 
 import { useContext, useState } from "react";
 import Image from "next/image";
-import { Formik } from "formik";
-import { object, number } from "yup";
 
 import { AquariumContext } from "../../../../AppContext";
 import ParmatersForm from "./ParametersForm";
@@ -32,8 +30,8 @@ export default function AquariumPage() {
         height={500}
         className="mt-5"
       />
-      <h1>{aquarium.brand}</h1>
-      <p>{aquarium.model}</p>
+      <h1>{aquarium ? aquarium.brand : "Loading..."}</h1>
+      <p>{aquarium ? aquarium.model : "Loading..."}</p>
       <button onClick={toggleShowForm} className={buttonStyling}>
         Update Parameters
       </button>
