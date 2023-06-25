@@ -185,7 +185,6 @@ class WaterParameter(db.Model):
     salinity = db.Column(db.Float)
     ph = db.Column(db.Float)
     ammonia = db.Column(db.Float)
-    nitrite = db.Column(db.Float)
     nitrate = db.Column(db.Float)
     phosphate = db.Column(db.Float)
     calcium = db.Column(db.Float)
