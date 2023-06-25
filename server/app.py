@@ -8,7 +8,7 @@ from datetime import timedelta
 import os
 import ipdb
 
-from models import User, Aquarium
+from models import User, Aquarium, WaterParameter
 from extensions import db, migrate
 
 load_dotenv()
@@ -123,6 +123,39 @@ class AquariumResource(Resource):
 
 api.add_resource(AquariumResource, "/api/aquariums")
 
+
+class WaterParameterResource(Resource):
+    def get(self):
+        pass
+
+    def post(self):
+        data = request.get_json()
+        aquarium_id = data.get("aquarium_id")
+        ph = data.get("ph")
+        ammonia = data.get("ammonia")
+        nitrate = data.get("nitrate")
+        kh = data.get("kh")
+        gh = data.get("gh")
+        salinity = data.get("salinity")
+        temperature = data.get("temperature")
+
+        new_water_parameter = WaterParameter(
+            aquarium_id=aquarium_id,
+            ph=ph,
+            ammonia=ammonia,
+            nitrate=nitrate,
+            kh=kh,
+            gh=gh,
+            salinity=salinity,
+            temperature=temperature,
+        )
+
+        db.session.add(new_water_parameter)
+        db.session.commit()
+        return make_response(jsonify(new_water_parameter.to_dict()), 201)
+
+
+api.add_resource(WaterParameterResource, "/api/water-parameters")
 
 if __name__ == "__main__":
     with app.app_context():
