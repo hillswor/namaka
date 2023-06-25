@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -78,7 +80,17 @@ export default function ParametersForm({ toggleShowForm }) {
       },
       validationSchema: parametersSchema,
       onSubmit: (values, resetForm) => {
-        console.log(values);
+        fetch("/api/water-parameters", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
         resetForm();
       },
     });
