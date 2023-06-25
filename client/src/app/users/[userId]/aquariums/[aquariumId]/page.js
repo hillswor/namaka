@@ -20,7 +20,7 @@ export default function AquariumPage() {
   };
 
   return showForm ? (
-    <ParmatersForm toggleShowForm={toggleShowForm} />
+    <ParmatersForm toggleShowForm={toggleShowForm} aquarium={aquarium} />
   ) : (
     <section className={sectionStyling}>
       <Image

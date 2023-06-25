@@ -4,7 +4,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-export default function ParametersForm({ toggleShowForm }) {
+export default function ParametersForm({ toggleShowForm, aquarium }) {
   const sectionStyling = "flex flex-col  items-center justify-center";
   const formStyling =
     "flex flex-col items-center justify-center border-4 border-namaka-blue rounded-md max-w-xl m-auto p-8 mt-";
@@ -86,8 +86,8 @@ export default function ParametersForm({ toggleShowForm }) {
       alkalinity: "",
     },
     validationSchema: parametersSchema,
-    onSubmit: (values, resetForm) => {
-      event.preventDefault();
+    onSubmit: (values) => {
+      values.aquarium_id = aquarium.id;
       fetch("/api/water-parameters", {
         method: "POST",
         headers: {
@@ -100,6 +100,7 @@ export default function ParametersForm({ toggleShowForm }) {
           console.log(data);
         });
       resetForm();
+      toggleShowForm();
     },
   });
 
