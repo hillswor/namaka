@@ -199,11 +199,10 @@ class WaterParameter(db.Model):
         return {
             "id": self.id,
             "aquarium_id": self.aquarium_id,
-            "date_recorded": self.date_recorded,
+            "date_recorded": self.date_recorded.strftime("%Y-%m-%d"),
             "salinity": self.salinity,
             "ph": self.ph,
             "ammonia": self.ammonia,
-            "nitrite": self.nitrite,
             "nitrate": self.nitrate,
             "phosphate": self.phosphate,
             "calcium": self.calcium,
@@ -214,7 +213,7 @@ class WaterParameter(db.Model):
         }
 
     def __repr__(self):
-        return f"<Parameters {self.id} {self.aquarium_id} {self.salinity} {self.ph} {self.ammonia} {self.nitrite} {self.nitrate} {self.phosphate} {self.calcium} {self.magnesium} {self.alkalinity}>"
+        return f"<Parameters {self.id} {self.aquarium_id} {self.salinity} {self.ph} {self.ammonia} {self.nitrate} {self.phosphate} {self.calcium} {self.magnesium} {self.alkalinity}>"
 
 
 class Post(db.Model):

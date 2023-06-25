@@ -66,41 +66,49 @@ export default function ParametersForm({ toggleShowForm }) {
       .max(20, "Must Be No More Than 20 dKH"),
   });
 
-  const { values, handleBlur, handleChange, touched, resetForm, errors } =
-    useFormik({
-      initialValues: {
-        salinity: "",
-        ph: "",
-        ammonia: "",
-        nitrate: "",
-        phosphate: "",
-        calcium: "",
-        magnesium: "",
-        alkalinity: "",
-      },
-      validationSchema: parametersSchema,
-      onSubmit: (values, resetForm) => {
-        fetch("/api/water-parameters", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-          });
-        resetForm();
-      },
-    });
+  const {
+    values,
+    handleBlur,
+    handleChange,
+    touched,
+    resetForm,
+    errors,
+    handleSubmit,
+  } = useFormik({
+    initialValues: {
+      salinity: "",
+      ph: "",
+      ammonia: "",
+      nitrate: "",
+      phosphate: "",
+      calcium: "",
+      magnesium: "",
+      alkalinity: "",
+    },
+    validationSchema: parametersSchema,
+    onSubmit: (values, resetForm) => {
+      event.preventDefault();
+      fetch("/api/water-parameters", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+      resetForm();
+    },
+  });
 
   return (
     <section className={sectionStyling}>
       <button onClick={toggleShowForm} className={buttonStyling}>
         Back
       </button>
-      <form className={formStyling}>
+      <form onSubmit={handleSubmit} className={formStyling}>
         <label htmlFor="salinity" className={labelStyling}>
           Salinity (d SG)
         </label>

@@ -9,7 +9,7 @@ export default function Navbar() {
   const { user, setUser } = useContext(UserContext);
   const router = useRouter();
 
-  const navStyling = "fixed w-full flex justify-between bg-zinc-500 border-b-4";
+  const navStyling = "flex justify-between bg-zinc-500 border-b-4";
   const ulStyling = "flex items-end space-x-6 text-namaka-blue text-lg pr-6";
   const linkStyling =
     "hover:text-namaka-red active:text-namaka-red cursor-pointer";

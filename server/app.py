@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource
 from flask_bcrypt import check_password_hash
 from dotenv import load_dotenv
-from datetime import timedelta
+from datetime import date
 import os
 import ipdb
 
@@ -131,23 +131,27 @@ class WaterParameterResource(Resource):
     def post(self):
         data = request.get_json()
         aquarium_id = data.get("aquarium_id")
+        date_recorded = date.today().strftime("%Y-%m-%d")
+        salinity = data.get("salinity")
         ph = data.get("ph")
         ammonia = data.get("ammonia")
         nitrate = data.get("nitrate")
-        kh = data.get("kh")
-        gh = data.get("gh")
-        salinity = data.get("salinity")
-        temperature = data.get("temperature")
+        phosphate = data.get("phosphate")
+        calcium = data.get("calcium")
+        magnesium = data.get("magnesium")
+        alkalinity = data.get("alkalinity")
 
         new_water_parameter = WaterParameter(
             aquarium_id=aquarium_id,
+            date_recorded=date_recorded,
+            salinity=salinity,
             ph=ph,
             ammonia=ammonia,
             nitrate=nitrate,
-            kh=kh,
-            gh=gh,
-            salinity=salinity,
-            temperature=temperature,
+            phosphate=phosphate,
+            calcium=calcium,
+            magnesium=magnesium,
+            alkalinity=alkalinity,
         )
 
         db.session.add(new_water_parameter)
