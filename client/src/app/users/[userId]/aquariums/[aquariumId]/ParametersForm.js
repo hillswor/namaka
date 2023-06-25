@@ -7,25 +7,78 @@ export default function ParametersForm() {
     "flex flex-col items-center justify-center border-4 border-namaka-blue rounded-md max-w-xl m-auto p-8 mt-16";
   const labelStyling = "block text-zinc-500 text-lg mb-2";
   const numberInputStyling =
-    "number-input border-4 border-namaka-blue rounded-md px-4 py-2 mb-4 w-full";
+    "number-input border-4 border-namaka-blue rounded-md px-4 py-2 mb-2 w-full";
+  const errorStyling = "text-xs text-namaka-red mb-2";
 
   const parametersSchema = yup.object().shape({
-    ph: yup.number().required("Required").positive().min(0).max(14),
-    ammonia: yup.number().required("Required").positive().min(0).max(8),
+    salinity: yup
+      .number()
+      .required("Required")
+      .positive()
+      .min(1.01, "Must Be At Least 1.010 d SG")
+      .max(1.04, "Must Be No More Than 1.040 d SG"),
+    ph: yup
+      .number()
+      .required("Required")
+      .positive()
+      .min(0, "Must Be At Least 0")
+      .max(14, "Must Be No More Than 14"),
+    ammonia: yup
+      .number()
+      .required("Required")
+      .positive()
+      .min(0, "Must Be At Least 0 ppm")
+      .max(8, "Must Be No More Than 8 ppm"),
+    nitrate: yup
+      .number()
+      .required("Required")
+      .positive()
+      .min(0, "Must Be At Least 0 ppm")
+      .max(5, "Must Be No More Than 5 ppm"),
+    phosphate: yup
+      .number()
+      .required("Required")
+      .positive()
+      .min(0, "Must Be At Least 0 ppm")
+      .max(0.06, "Must Be No More Than 0.06 ppm"),
+    calcium: yup
+      .number()
+      .required("Required")
+      .positive()
+      .min(0, "Must Be At Least 0 ppm")
+      .max(900, "Must Be No More Than 900 ppm"),
+    magnesium: yup
+      .number()
+      .required("Required")
+      .positive()
+      .min(0, "Must Be At Least 0 ppm")
+      .max(2000, "Must Be No More Than 2000 ppm"),
+    alkalinity: yup
+      .number()
+      .required("Required")
+      .positive()
+      .min(0, "Must Be At Least 0 dKH")
+      .max(20, "Must Be No More Than 20 dKH"),
   });
 
-  const { values, handleBlur, handleChange } = useFormik({
-    initialValues: {
-      ph: "",
-      ammonia: "",
-      nitrite: "",
-      nitrate: "",
-      phosphate: "",
-      calcium: "",
-      magnesium: "",
-      alkalinity: "",
-    },
-  });
+  const { values, handleBlur, handleChange, touched, resetForm, errors } =
+    useFormik({
+      initialValues: {
+        salinity: "",
+        ph: "",
+        ammonia: "",
+        nitrate: "",
+        phosphate: "",
+        calcium: "",
+        magnesium: "",
+        alkalinity: "",
+      },
+      validationSchema: parametersSchema,
+      onSubmit: (values, resetForm) => {
+        console.log(values);
+        resetForm();
+      },
+    });
 
   return (
     <form className={formStyling}>
@@ -39,8 +92,12 @@ export default function ParametersForm() {
         value={values.salinity}
         onChange={handleChange}
         onBlur={handleBlur}
+        placeholder="Safe Range 1.025 - 1.027"
         className={numberInputStyling}
       />
+      {touched.salinity && errors.salinity ? (
+        <p className={errorStyling}>{errors.salinity}</p>
+      ) : null}
       <label htmlFor="ph" className={labelStyling}>
         pH
       </label>
@@ -51,8 +108,12 @@ export default function ParametersForm() {
         value={values.ph}
         onChange={handleChange}
         onBlur={handleBlur}
+        placeholder="Safe Range 7.8 - 8.5"
         className={numberInputStyling}
       />
+      {touched.ph && errors.ph ? (
+        <p className={errorStyling}>{errors.ph}</p>
+      ) : null}
       <label htmlFor="ammonia" className={labelStyling}>
         Ammonia (ppm)
       </label>
@@ -63,20 +124,12 @@ export default function ParametersForm() {
         value={values.ammonia}
         onChange={handleChange}
         onBlur={handleBlur}
+        placeholder="Safe Range 0 - 0.1 ppm"
         className={numberInputStyling}
       />
-      <label htmlFor="nitrite" className={labelStyling}>
-        Nitrite (ppm)
-      </label>
-      <input
-        id="nitrite"
-        name="nitrite"
-        type="number"
-        value={values.nitrite}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        className={numberInputStyling}
-      />
+      {touched.ammonia && errors.ammonia ? (
+        <p className={errorStyling}>{errors.ammonia}</p>
+      ) : null}
       <label htmlFor="nitrate" className={labelStyling}>
         Nitrate (ppm)
       </label>
@@ -87,8 +140,12 @@ export default function ParametersForm() {
         value={values.nitrate}
         onChange={handleChange}
         onBlur={handleBlur}
+        placeholder="Safe Range 0 - 5 ppm"
         className={numberInputStyling}
       />
+      {touched.nitrate && errors.nitrate ? (
+        <p className={errorStyling}>{errors.nitrate}</p>
+      ) : null}
       <label htmlFor="phosphate" className={labelStyling}>
         Phosphate (ppm)
       </label>
@@ -99,8 +156,12 @@ export default function ParametersForm() {
         value={values.phosphate}
         onChange={handleChange}
         onBlur={handleBlur}
+        placeholder="Safe Range 0 - 0.03 ppm"
         className={numberInputStyling}
       />
+      {touched.phosphate && errors.phosphate ? (
+        <p className={errorStyling}>{errors.phosphate}</p>
+      ) : null}
       <label htmlFor="calcium" className={labelStyling}>
         Calcium (ppm)
       </label>
@@ -111,8 +172,12 @@ export default function ParametersForm() {
         value={values.calcium}
         onChange={handleChange}
         onBlur={handleBlur}
+        placeholder="Safe Range 375 - 450 ppm"
         className={numberInputStyling}
       />
+      {touched.calcium && errors.calcium ? (
+        <p className={errorStyling}>{errors.calcium}</p>
+      ) : null}
       <label htmlFor="magnesium" className={labelStyling}>
         Magnesium (ppm)
       </label>
@@ -123,8 +188,12 @@ export default function ParametersForm() {
         value={values.magnesium}
         onChange={handleChange}
         onBlur={handleBlur}
+        placeholder="Safe Range 1250 - 1350 ppm"
         className={numberInputStyling}
       />
+      {touched.magnesium && errors.magnesium ? (
+        <p className={errorStyling}>{errors.magnesium}</p>
+      ) : null}
       <label htmlFor="alkalinity" className={labelStyling}>
         Alkalinity (dKH)
       </label>
@@ -135,8 +204,12 @@ export default function ParametersForm() {
         value={values.alkalinity}
         onChange={handleChange}
         onBlur={handleBlur}
+        placeholder="Safe Range 7 - 11 dKH"
         className={numberInputStyling}
       />
+      {touched.alkalinity && errors.alkalinity ? (
+        <p className={errorStyling}>{errors.alkalinity}</p>
+      ) : null}
     </form>
   );
 }
