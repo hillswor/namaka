@@ -136,25 +136,75 @@ export default function AquariumPage() {
     </>
   );
 
-  const dates = aquarium.water_parameters.map(
-    (param) => new Date(param.date_recorded)
-  );
-  const salinityLevels = aquarium.water_parameters.map(
-    (param) => param.salinity
-  );
-  const pHLevels = aquarium.water_parameters.map((param) => param.ph);
-  const ammoniaLevels = aquarium.water_parameters.map((param) => param.ammonia);
-  const nitrateLevels = aquarium.water_parameters.map((param) => param.nitrate);
-  const phosphateLevels = aquarium.water_parameters.map(
-    (param) => param.phosphate
-  );
-  const calciumLevels = aquarium.water_parameters.map((param) => param.calcium);
-  const magnesiumLevels = aquarium.water_parameters.map(
-    (param) => param.magnesium
-  );
-  const alkalinityLevels = aquarium.water_parameters.map(
-    (param) => param.alkalinity
-  );
+  // ...
+
+  const dates = aquarium.water_parameters
+    .map((param) => new Date(param.date_recorded))
+    .sort((a, b) => a - b);
+
+  const salinityLevels = aquarium.water_parameters
+    .map((param) => param.salinity)
+    .sort(
+      (a, b) =>
+        dates.indexOf(new Date(a.date_recorded)) -
+        dates.indexOf(new Date(b.date_recorded))
+    );
+
+  const pHLevels = aquarium.water_parameters
+    .map((param) => param.ph)
+    .sort(
+      (a, b) =>
+        dates.indexOf(new Date(a.date_recorded)) -
+        dates.indexOf(new Date(b.date_recorded))
+    );
+
+  const ammoniaLevels = aquarium.water_parameters
+    .map((param) => param.ammonia)
+    .sort(
+      (a, b) =>
+        dates.indexOf(new Date(a.date_recorded)) -
+        dates.indexOf(new Date(b.date_recorded))
+    );
+
+  const nitrateLevels = aquarium.water_parameters
+    .map((param) => param.nitrate)
+    .sort(
+      (a, b) =>
+        dates.indexOf(new Date(a.date_recorded)) -
+        dates.indexOf(new Date(b.date_recorded))
+    );
+
+  const phosphateLevels = aquarium.water_parameters
+    .map((param) => param.phosphate)
+    .sort(
+      (a, b) =>
+        dates.indexOf(new Date(a.date_recorded)) -
+        dates.indexOf(new Date(b.date_recorded))
+    );
+
+  const calciumLevels = aquarium.water_parameters
+    .map((param) => param.calcium)
+    .sort(
+      (a, b) =>
+        dates.indexOf(new Date(a.date_recorded)) -
+        dates.indexOf(new Date(b.date_recorded))
+    );
+
+  const magnesiumLevels = aquarium.water_parameters
+    .map((param) => param.magnesium)
+    .sort(
+      (a, b) =>
+        dates.indexOf(new Date(a.date_recorded)) -
+        dates.indexOf(new Date(b.date_recorded))
+    );
+
+  const alkalinityLevels = aquarium.water_parameters
+    .map((param) => param.alkalinity)
+    .sort(
+      (a, b) =>
+        dates.indexOf(new Date(a.date_recorded)) -
+        dates.indexOf(new Date(b.date_recorded))
+    );
 
   const chartData = [
     {
@@ -239,7 +289,10 @@ export default function AquariumPage() {
   };
 
   return parameterForm ? (
-    <ParmatersForm toggleShowForm={toggleParameterForm} aquarium={aquarium} />
+    <ParmatersForm
+      toggleParameterForm={toggleParameterForm}
+      aquarium={aquarium}
+    />
   ) : (
     <main className={mainStyling}>
       <button

@@ -4,7 +4,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-export default function ParametersForm({ toggleShowForm, aquarium }) {
+export default function ParametersForm({ toggleParameterForm, aquarium }) {
   const sectionStyling =
     "flex flex-col items-center justify-center border-4 border-blue-500 bg-gray-800 text-white rounded-lg max-w-xl mx-auto p-8 mt-10 sm:mt-16";
   const formStyling = "w-full";
@@ -86,7 +86,7 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
       alkalinity: "",
     },
     validationSchema: parametersSchema,
-    onSubmit: (values, resetForm) => {
+    onSubmit: (values) => {
       values.aquarium_id = aquarium.id;
       fetch("/api/water-parameters", {
         method: "POST",
@@ -97,7 +97,9 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          aquarium.water_parameters.push(data);
+          resetForm();
+          toggleParameterForm();
         });
       resetForm();
       toggleShowForm();
@@ -106,7 +108,7 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
 
   return (
     <section className={sectionStyling}>
-      <button onClick={toggleShowForm} className={buttonStyling}>
+      <button onClick={toggleParameterForm} className={buttonStyling}>
         Back
       </button>
       <form onSubmit={handleSubmit} className={formStyling}>
