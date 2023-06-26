@@ -1,11 +1,11 @@
 import "./globals.css";
-import { Anton } from "next/font/google";
+import { Roboto_Flex } from "next/font/google";
 import Navbar from "./navbar";
 import UserProvider from "./AppContext";
 
-const anton = Anton({
-  weight: "400",
+const robotoFlex = Roboto_Flex({
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata = {
@@ -15,8 +15,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`bg-namaka-white ${anton.className}`}>
+    <html lang="en" className={robotoFlex.className}>
+      <body className="bg-gray-200 min-h-screen">
         <UserProvider>
           <Navbar />
           {children}

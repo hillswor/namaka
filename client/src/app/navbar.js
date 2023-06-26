@@ -3,17 +3,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { useContext } from "react";
 import { UserContext } from "./AppContext";
-import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const { user, setUser } = useContext(UserContext);
-  const router = useRouter();
 
-  const navStyling = "flex justify-between bg-zinc-500 border-b-4";
-  const ulStyling = "flex items-end space-x-6 text-namaka-blue text-lg pr-6";
+  const navStyling =
+    "flex justify-between bg-gray-800 text-white py-6 px-4 border-b-4 border-blue-500";
+  const ulStyling = "flex items-center space-x-6 text-lg";
   const linkStyling =
-    "hover:text-namaka-red active:text-namaka-red cursor-pointer";
-  const logoStyling = "hover:opacity-50 active:opacity-50 cursor-pointer pl-2";
+    "hover:text-blue-400 transition duration-200 ease-in-out cursor-pointer";
+  const logoStyling =
+    "hover:opacity-80 transition duration-200 ease-in-out cursor-pointer";
 
   const handleLogout = () => {
     fetch("/api/logout", {

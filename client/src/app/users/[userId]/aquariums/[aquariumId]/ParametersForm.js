@@ -5,15 +5,15 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 export default function ParametersForm({ toggleShowForm, aquarium }) {
-  const sectionStyling = "flex flex-col  items-center justify-center";
+  const sectionStyling = "flex flex-col items-center justify-center";
   const formStyling =
-    "flex flex-col items-center justify-center border-4 border-namaka-blue rounded-md max-w-xl m-auto p-8 mt-";
+    "flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-";
   const labelStyling = "block text-zinc-500 text-lg mb-2";
   const numberInputStyling =
-    "number-input border-4 border-namaka-blue rounded-md px-4 py-2 mb-2 w-full";
+    "border-4 border-blue-500 rounded-md px-4 py-2 mb-2 w-full";
   const errorStyling = "text-xs text-namaka-red mb-2";
   const buttonStyling =
-    "bg-zinc-500 text-namaka-blue px-4 py-2 rounded-md hover:text-namaka-red transition-all duration-200 border-2 border-namaka-blue hover:border-namaka-red mt-2 mb-2";
+    "bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-400 transition-all duration-200 border-2 border-blue-500 hover:border-blue-400 mt-2 mb-2";
 
   const parametersSchema = yup.object().shape({
     salinity: yup
