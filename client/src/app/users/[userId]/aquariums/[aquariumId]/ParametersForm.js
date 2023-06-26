@@ -5,15 +5,15 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 export default function ParametersForm({ toggleShowForm, aquarium }) {
-  const sectionStyling = "flex flex-col  items-center justify-center";
-  const formStyling =
-    "flex flex-col items-center justify-center border-4 border-namaka-blue rounded-md max-w-xl m-auto p-8 mt-";
-  const labelStyling = "block text-zinc-500 text-lg mb-2";
-  const numberInputStyling =
-    "number-input border-4 border-namaka-blue rounded-md px-4 py-2 mb-2 w-full";
-  const errorStyling = "text-xs text-namaka-red mb-2";
+  const sectionStyling =
+    "flex flex-col items-center justify-center border-4 border-blue-500 bg-gray-800 text-white rounded-lg max-w-xl mx-auto p-8 mt-10 sm:mt-16";
+  const formStyling = "w-full";
+  const labelStyling = "block text-white text-lg mb-2";
+  const inputStyling =
+    "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 w-full";
   const buttonStyling =
-    "bg-zinc-500 text-namaka-blue px-4 py-2 rounded-md hover:text-namaka-red transition-all duration-200 border-2 border-namaka-blue hover:border-namaka-red mt-2 mb-2";
+    "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200";
+  const errorStyling = "bg-red-500 text-white p-2 mb-2 rounded";
 
   const parametersSchema = yup.object().shape({
     salinity: yup
@@ -121,7 +121,7 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 1.025 - 1.027"
-          className={numberInputStyling}
+          className={inputStyling}
         />
         {touched.salinity && errors.salinity ? (
           <p className={errorStyling}>{errors.salinity}</p>
@@ -137,7 +137,7 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 7.8 - 8.5"
-          className={numberInputStyling}
+          className={inputStyling}
         />
         {touched.ph && errors.ph ? (
           <p className={errorStyling}>{errors.ph}</p>
@@ -153,7 +153,7 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 0 - 0.1 ppm"
-          className={numberInputStyling}
+          className={inputStyling}
         />
         {touched.ammonia && errors.ammonia ? (
           <p className={errorStyling}>{errors.ammonia}</p>
@@ -169,7 +169,7 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 0 - 5 ppm"
-          className={numberInputStyling}
+          className={inputStyling}
         />
         {touched.nitrate && errors.nitrate ? (
           <p className={errorStyling}>{errors.nitrate}</p>
@@ -185,7 +185,7 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 0 - 0.03 ppm"
-          className={numberInputStyling}
+          className={inputStyling}
         />
         {touched.phosphate && errors.phosphate ? (
           <p className={errorStyling}>{errors.phosphate}</p>
@@ -201,7 +201,7 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 375 - 450 ppm"
-          className={numberInputStyling}
+          className={inputStyling}
         />
         {touched.calcium && errors.calcium ? (
           <p className={errorStyling}>{errors.calcium}</p>
@@ -217,7 +217,7 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 1250 - 1350 ppm"
-          className={numberInputStyling}
+          className={inputStyling}
         />
         {touched.magnesium && errors.magnesium ? (
           <p className={errorStyling}>{errors.magnesium}</p>
@@ -233,7 +233,7 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 7 - 11 dKH"
-          className={numberInputStyling}
+          className={inputStyling}
         />
         {touched.alkalinity && errors.alkalinity ? (
           <p className={errorStyling}>{errors.alkalinity}</p>

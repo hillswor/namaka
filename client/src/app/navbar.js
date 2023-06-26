@@ -3,9 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useContext } from "react";
 import { UserContext } from "./AppContext";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const { user, setUser } = useContext(UserContext);
+
+  const router = useRouter();
 
   const navStyling =
     "flex justify-between bg-gray-800 text-white py-6 px-4 border-b-4 border-blue-500";
@@ -21,6 +24,7 @@ export default function Navbar() {
     }).then((res) => {
       if (res.status === 200) {
         setUser(null);
+        router.push("/");
       } else {
         throw new Error("Unable to logout");
       }

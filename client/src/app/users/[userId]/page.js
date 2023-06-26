@@ -31,9 +31,6 @@ export default function UserPage() {
   const userHeaderStyling = "text-3xl font-bold mt-8 mb-4";
   const aquariumStyling =
     "flex items-center space-x-4 border-2 border-blue-500 rounded-lg p-2 mt-4 bg-gray-200 text-blue-500";
-  const brandModelVolumeStyling = "flex items-center";
-  const aquariumButtonStyling =
-    "bg-gray-800 text-white px-4 py-2 rounded-md hover:text-blue-500 transition-all duration-200 border-2 border-blue-500 hover:border-gray-200";
 
   const AquariumSchema = Yup.object().shape({
     brand: Yup.string().required("Required"),
@@ -137,7 +134,9 @@ export default function UserPage() {
       {!showForm && (
         <button
           onClick={() => setShowForm(true)}
-          className={`${buttonStyling} mt-4`}
+          className={
+            "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
+          }
         >
           Add Aquarium
         </button>
@@ -161,13 +160,19 @@ export default function UserPage() {
                     />
                   </figure>
                   <article>
-                    <p className={brandModelVolumeStyling}>{aquarium.brand}</p>
-                    <p className={brandModelVolumeStyling}>{aquarium.model}</p>
-                    <p className={brandModelVolumeStyling}>
+                    <p className={"flex items-center text-gray-800 mb-2"}>
+                      {aquarium.brand}
+                    </p>
+                    <p className={"flex items-center text-gray-800 mb-2"}>
+                      {aquarium.model}
+                    </p>
+                    <p className={"flex items-center text-gray-800 mb-2"}>
                       {aquarium.volume} gallons
                     </p>
                     <button
-                      className={`${aquariumButtonStyling} mt-2`}
+                      className={
+                        "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
+                      }
                       onClick={() =>
                         setAquarium(aquarium) &
                         router.push(

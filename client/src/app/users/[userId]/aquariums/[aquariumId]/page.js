@@ -256,7 +256,7 @@ export default function AquariumPage() {
       <p>{aquarium.model}</p>
       <button
         className={
-          "bg-blue-500 text-white px-4 py-2 rounded-md hover:text-gray-800 transition-all duration-200 border-2 border-white hover:border-gray-800 mt-2"
+          "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 mt-2"
         }
         onClick={toggleShowForm}
       >
@@ -264,7 +264,12 @@ export default function AquariumPage() {
       </button>
       <div className={chartContainerStyling}>
         <div className={toggleButtonContainerStyling}>
-          <button onClick={previousChart} className={leftToggleButtonStyling}>
+          <button
+            onClick={previousChart}
+            className={
+              "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 mr-4"
+            }
+          >
             {"<"}
           </button>
           <div className={chartStyling}>
@@ -276,7 +281,12 @@ export default function AquariumPage() {
               options={options}
             />
           </div>
-          <button onClick={nextChart} className={rightToggleButtonStyling}>
+          <button
+            onClick={nextChart}
+            className={
+              "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 ml-4"
+            }
+          >
             {">"}
           </button>
         </div>
