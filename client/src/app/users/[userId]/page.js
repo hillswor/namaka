@@ -22,10 +22,16 @@ export default function UserPage() {
   const buttonStyling =
     "bg-blue-500 text-white px-4 py-2 rounded-md hover:text-gray-800 transition-all duration-200 border-2 border-white hover:border-gray-800";
   const errorStyling = "bg-red-600 text-white p-2 mb-2 rounded";
-  const aquariumStyling =
-    "flex items-center space-x-4 border-2 border-gray-200 rounded-lg p-2 mt-4 bg-gray-800 text-white";
   const imgStyling =
     "rounded-lg shadow-lg transform transition duration-500 hover:scale-105";
+  const mainStyling =
+    "flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-16 bg-gray-800 text-white";
+  const userHeaderStyling = "text-3xl font-bold mt-8";
+  const aquariumStyling =
+    "flex items-center space-x-4 border-2 border-blue-500 rounded-lg p-2 mt-4 bg-gray-200 text-blue-500";
+  const brandModelVolumeStyling = "flex items-center";
+  const aquariumButtonStyling =
+    "bg-gray-800 text-white px-4 py-2 rounded-md hover:text-blue-500 transition-all duration-200 border-2 border-blue-500 hover:border-gray-200";
 
   const AquariumSchema = Yup.object().shape({
     brand: Yup.string().required("Required"),
@@ -124,8 +130,8 @@ export default function UserPage() {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="text-3xl font-bold mt-8">Hello, {user.id}</h1>
+    <main className={mainStyling}>
+      <h1 className={userHeaderStyling}>Hello, {user.email}</h1>
       {!showForm && (
         <button
           onClick={() => setShowForm(true)}
@@ -136,12 +142,12 @@ export default function UserPage() {
       )}
       {showForm && form}
       {user.aquariums.length > 0 ? (
-        <div className="mt-8">
+        <section className="mt-8">
           <h2 className="text-2xl font-bold mb-2">Your Aquariums</h2>
-          <ul className="list-inside">
+          <ul>
             {user.aquariums.map((aquarium) => (
               <li key={aquarium.id} className={aquariumStyling}>
-                <div className="flex-shrink-0">
+                <figure className="flex-shrink-0">
                   <Image
                     src="/reef-tank.jpeg"
                     alt="Reef Tank"
@@ -149,15 +155,15 @@ export default function UserPage() {
                     height={100}
                     className={imgStyling}
                   />
-                </div>
-                <div>
-                  <div className="flex items-center">{aquarium.brand}</div>
-                  <div className="flex items-center">{aquarium.model}</div>
-                  <div className="flex items-center">
+                </figure>
+                <article>
+                  <p className={brandModelVolumeStyling}>{aquarium.brand}</p>
+                  <p className={brandModelVolumeStyling}>{aquarium.model}</p>
+                  <p className={brandModelVolumeStyling}>
                     {aquarium.volume} gallons
-                  </div>
+                  </p>
                   <button
-                    className={`${buttonStyling} mt-2`}
+                    className={`${aquariumButtonStyling} mt-2`}
                     onClick={() =>
                       setAquarium(aquarium) &
                       router.push(`/users/${user.id}/aquariums/${aquarium.id}`)
@@ -165,14 +171,14 @@ export default function UserPage() {
                   >
                     View Aquarium
                   </button>
-                </div>
+                </article>
               </li>
             ))}
           </ul>
-        </div>
+        </section>
       ) : (
         <p className="text-lg mt-8">You currently have no aquariums.</p>
       )}
-    </div>
+    </main>
   );
 }
