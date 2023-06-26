@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import "chartjs-adapter-date-fns";
@@ -18,6 +19,8 @@ export default function AquariumPage() {
   const { aquarium } = useContext(AquariumContext);
   const [parameterForm, setParameterForm] = useState(false);
   const [chartIndex, setChartIndex] = useState(0);
+
+  const router = useRouter();
 
   const toggleParameterForm = () => {
     setParameterForm(!parameterForm);
@@ -237,10 +240,18 @@ export default function AquariumPage() {
     );
   };
 
-  return showForm ? (
+  return parameterForm ? (
     <ParmatersForm toggleShowForm={toggleParameterForm} aquarium={aquarium} />
   ) : (
     <main className={mainStyling}>
+      <button
+        onClick={() => router.back()}
+        className={
+          "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
+        }
+      >
+        Back
+      </button>
       <Image
         src="/reef-tank.jpeg"
         alt="Reef Tank"
