@@ -35,8 +35,6 @@ export default function AquariumPage() {
   const labelStyling = "block text-blue-400 text-lg mb-2";
   const inputStyling =
     "border-4 border-blue-500 rounded-md px-4 py-2 mb-4 w-full text-gray-800";
-  const backButtonStyling =
-    "bg-blue-500 text-white px-4 py-2 rounded-md hover:text-gray-800 transition-all duration-200 border-2 border-white hover:border-gray-800 mt-2";
   const errorStyling = "bg-red-600 text-white p-2 mb-2 rounded";
   const mainStyling =
     "flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-16 bg-gray-800 text-white";

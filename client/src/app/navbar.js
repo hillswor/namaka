@@ -35,7 +35,7 @@ export default function Navbar() {
     <nav className={navStyling}>
       <Link href="/">
         <Image
-          src="/namaka-transparent.svg"
+          src="/namaka-logo.svg"
           alt="Nakama Logo"
           width={100}
           height={100}
@@ -64,7 +64,7 @@ export default function Navbar() {
   ) : (
     <nav className={navStyling}>
       <Image
-        src="/namaka-transparent.svg"
+        src="/namaka-logo.svg"
         alt="Nakama Logo"
         width={100}
         height={100}
