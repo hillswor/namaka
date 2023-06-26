@@ -91,6 +91,8 @@ export default function Signup() {
 
   const formik = useFormik({
     initialValues: {
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -119,6 +121,34 @@ export default function Signup() {
 
   return (
     <form onSubmit={formik.handleSubmit} className={formStyling}>
+      <label htmlFor="firstName" className={labelStyling}>
+        First Name
+      </label>
+      <input
+        id="firstName"
+        name="firstName"
+        type="firstName"
+        onChange={formik.handleChange}
+        value={formik.values.firstName}
+        className={inputStyling}
+      />
+      {formik.errors.firstName && formik.touched.firstName ? (
+        <div className={errorStyling}>{formik.errors.firstName}</div>
+      ) : null}
+      <label htmlFor="lastName" className={labelStyling}>
+        Last Name
+      </label>
+      <input
+        id="lastName"
+        name="lastName"
+        type="lastName"
+        onChange={formik.handleChange}
+        value={formik.values.lastName}
+        className={inputStyling}
+      />
+      {formik.errors.lastName && formik.touched.lastName ? (
+        <div className={errorStyling}>{formik.errors.lastName}</div>
+      ) : null}
       <label htmlFor="email" className={labelStyling}>
         Email Address
       </label>

@@ -67,6 +67,8 @@ class User(db.Model):
     }
 
     id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(120))
+    last_name = db.Column(db.String(120))
     email = db.Column(db.String(254), unique=True, nullable=False)
     password = db.Column(db.String(254))
     city = db.Column(db.String(120))
@@ -102,6 +104,8 @@ class User(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
             "email": self.email,
             "city": self.city,
             "state": self.state,

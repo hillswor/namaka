@@ -40,12 +40,16 @@ class UserResource(Resource):
 
     def post(self):
         data = request.get_json()
+        first_name = data.get("first_name")
+        last_name = data.get("last_name")
         email = data.get("email")
         password = data.get("password")
         city = data.get("city")
         state = data.get("state")
 
         new_user = User(
+            first_name=first_name.title(),
+            last_name=last_name.title(),
             email=email,
             password=password,
             city=city.title(),

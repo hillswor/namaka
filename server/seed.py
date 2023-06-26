@@ -132,9 +132,11 @@ def clear_data():
 
 
 def seed_users():
-    for i in range(40):
+    for i in range(30):
         password = "password"
         user = User(
+            first_name=fake.first_name(),
+            last_name=fake.last_name(),
             email=fake.email(),
             password=password,
             city=fake.city(),
@@ -147,7 +149,7 @@ def seed_users():
 
 def seed_aquariums():
     users = User.query.all()
-    for i in range(100):
+    for i in range(60):
         owner_id = random_choice(users).id
         brand = random_choice(aquarium_brands)
         model = random_choice(aquarium_models)
@@ -159,7 +161,7 @@ def seed_aquariums():
 
 def seed_water_parameters():
     aquariums = Aquarium.query.all()
-    for i in range(100):
+    for i in range(1000):
         new_water_parameters = WaterParameter(
             aquarium_id=random_choice(aquariums).id,
             date_recorded=fake.date_between(
