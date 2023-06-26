@@ -139,6 +139,9 @@ class Aquarium(db.Model):
             "volume": self.volume,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
+            "water_parameters": [
+                water_parameter.to_dict() for water_parameter in self.water_parameters
+            ],
         }
 
     def __repr__(self):
