@@ -11,7 +11,8 @@ export default function ParametersChart({ aquarium }) {
   );
   const pHLevels = aquarium.water_parameters.map((param) => param.ph);
 
-  const chartStyling = "flex flex-col items-center justify-center mt-4 mb-4";
+  const chartStyling =
+    "flex flex-col items-center justify-center mt-4 mb-4 bg-gray-200 p-2 border-2 border-blue-500 rounded-md";
   const lineStyling = "bg-namaka-blue border-zinc-500"; // set the line and point color here
 
   const data = {
@@ -21,8 +22,8 @@ export default function ParametersChart({ aquarium }) {
         label: "pH Levels",
         data: pHLevels,
         fill: false,
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgba(255, 99, 132, 0.2)",
+        backgroundColor: "#FF6384",
+        borderColor: "#FF6384",
       },
     ],
   };

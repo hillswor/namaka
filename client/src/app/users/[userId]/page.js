@@ -15,18 +15,20 @@ export default function UserPage() {
   const router = useRouter();
 
   const formStyling =
-    "flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-16 bg-gray-800 text-white";
+    "flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-8 bg-gray-800 text-white";
   const labelStyling = "block text-blue-400 text-lg mb-2";
   const inputStyling =
     "border-4 border-blue-500 rounded-md px-4 py-2 mb-4 w-full text-gray-800";
   const buttonStyling =
     "bg-blue-500 text-white px-4 py-2 rounded-md hover:text-gray-800 transition-all duration-200 border-2 border-white hover:border-gray-800";
+  const backButtonStyling =
+    "bg-blue-500 text-white px-4 py-2 rounded-md hover:text-gray-800 transition-all duration-200 border-2 border-white hover:border-gray-800 mt-2";
   const errorStyling = "bg-red-600 text-white p-2 mb-2 rounded";
   const imgStyling =
     "rounded-lg shadow-lg transform transition duration-500 hover:scale-105";
   const mainStyling =
     "flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-16 bg-gray-800 text-white";
-  const userHeaderStyling = "text-3xl font-bold mt-8";
+  const userHeaderStyling = "text-3xl font-bold mt-8 mb-4";
   const aquariumStyling =
     "flex items-center space-x-4 border-2 border-blue-500 rounded-lg p-2 mt-4 bg-gray-200 text-blue-500";
   const brandModelVolumeStyling = "flex items-center";
@@ -65,9 +67,9 @@ export default function UserPage() {
     },
   });
 
-  const form = (
+  const renderForm = () => (
     <>
-      <button onClick={() => setShowForm(false)} className={buttonStyling}>
+      <button onClick={() => setShowForm(false)} className={backButtonStyling}>
         Back
       </button>
       <form onSubmit={formik.handleSubmit} className={formStyling}>
@@ -140,44 +142,51 @@ export default function UserPage() {
           Add Aquarium
         </button>
       )}
-      {showForm && form}
-      {user.aquariums.length > 0 ? (
-        <section className="mt-8">
-          <h2 className="text-2xl font-bold mb-2">Your Aquariums</h2>
-          <ul>
-            {user.aquariums.map((aquarium) => (
-              <li key={aquarium.id} className={aquariumStyling}>
-                <figure className="flex-shrink-0">
-                  <Image
-                    src="/reef-tank.jpeg"
-                    alt="Reef Tank"
-                    width={100}
-                    height={100}
-                    className={imgStyling}
-                  />
-                </figure>
-                <article>
-                  <p className={brandModelVolumeStyling}>{aquarium.brand}</p>
-                  <p className={brandModelVolumeStyling}>{aquarium.model}</p>
-                  <p className={brandModelVolumeStyling}>
-                    {aquarium.volume} gallons
-                  </p>
-                  <button
-                    className={`${aquariumButtonStyling} mt-2`}
-                    onClick={() =>
-                      setAquarium(aquarium) &
-                      router.push(`/users/${user.id}/aquariums/${aquarium.id}`)
-                    }
-                  >
-                    View Aquarium
-                  </button>
-                </article>
-              </li>
-            ))}
-          </ul>
-        </section>
+      {!showForm ? (
+        <div>
+          <h2 className="text-2xl font-bold mb-2 mt-6 text-center">
+            Your Aquariums
+          </h2>
+          {user.aquariums.length > 0 ? (
+            <ul>
+              {user.aquariums.map((aquarium) => (
+                <li key={aquarium.id} className={aquariumStyling}>
+                  <figure className="flex-shrink-0">
+                    <Image
+                      src="/reef-tank.jpeg"
+                      alt="Reef Tank"
+                      width={100}
+                      height={100}
+                      className={imgStyling}
+                    />
+                  </figure>
+                  <article>
+                    <p className={brandModelVolumeStyling}>{aquarium.brand}</p>
+                    <p className={brandModelVolumeStyling}>{aquarium.model}</p>
+                    <p className={brandModelVolumeStyling}>
+                      {aquarium.volume} gallons
+                    </p>
+                    <button
+                      className={`${aquariumButtonStyling} mt-2`}
+                      onClick={() =>
+                        setAquarium(aquarium) &
+                        router.push(
+                          `/users/${user.id}/aquariums/${aquarium.id}`
+                        )
+                      }
+                    >
+                      View Aquarium
+                    </button>
+                  </article>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-lg mt-8">You currently have no aquariums.</p>
+          )}
+        </div>
       ) : (
-        <p className="text-lg mt-8">You currently have no aquariums.</p>
+        renderForm()
       )}
     </main>
   );
