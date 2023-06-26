@@ -16,11 +16,11 @@ Chart.register(...registerables);
 
 export default function AquariumPage() {
   const { aquarium } = useContext(AquariumContext);
-  const [showForm, setShowForm] = useState(false);
+  const [parameterForm, setParameterForm] = useState(false);
   const [chartIndex, setChartIndex] = useState(0);
 
-  const toggleShowForm = () => {
-    setShowForm(!showForm);
+  const toggleParameterForm = () => {
+    setParameterForm(!parameterForm);
   };
 
   const imgStyling =
@@ -43,10 +43,6 @@ export default function AquariumPage() {
     "relative flex flex-col items-center justify-center";
   const toggleButtonContainerStyling =
     "flex items-center justify-between w-full mt-2";
-  const toggleButtonStyling =
-    "bg-blue-500 text-white px-4 py-2 rounded-md hover:text-gray-800 transition-all duration-200 border-2 border-white hover:border-gray-800";
-  const leftToggleButtonStyling = toggleButtonStyling + " mr-2";
-  const rightToggleButtonStyling = toggleButtonStyling + " ml-2";
 
   const AquariumSchema = Yup.object().shape({
     brand: Yup.string().required("Required"),
@@ -76,7 +72,7 @@ export default function AquariumPage() {
           setUser(updatedUser);
         });
       resetForm();
-      setShowForm(false);
+      setParameterForm(false);
     },
   });
 
@@ -242,7 +238,7 @@ export default function AquariumPage() {
   };
 
   return showForm ? (
-    <ParmatersForm toggleShowForm={toggleShowForm} aquarium={aquarium} />
+    <ParmatersForm toggleShowForm={toggleParameterForm} aquarium={aquarium} />
   ) : (
     <main className={mainStyling}>
       <Image
@@ -258,7 +254,7 @@ export default function AquariumPage() {
         className={
           "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 mt-2"
         }
-        onClick={toggleShowForm}
+        onClick={toggleParameterForm}
       >
         Log Parameters
       </button>

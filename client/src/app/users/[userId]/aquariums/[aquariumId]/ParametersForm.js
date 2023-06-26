@@ -238,7 +238,12 @@ export default function ParametersForm({ toggleShowForm, aquarium }) {
         {touched.alkalinity && errors.alkalinity ? (
           <p className={errorStyling}>{errors.alkalinity}</p>
         ) : null}
-        <button type="submit" className={buttonStyling}>
+        <button
+          type="submit"
+          className={
+            "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
+          }
+        >
           Submit
         </button>
       </form>
