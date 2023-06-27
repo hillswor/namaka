@@ -1,10 +1,12 @@
 "use client";
 
-import { useContext } from "react";
-import { PostsContext } from "../AppContext";
+import { useContext, useState } from "react";
+import { PostsContext, PostContext } from "../AppContext";
 
 export default function Posts() {
+  const [toggleCommentForm, setToggleCommentForm] = useState(false);
   const { posts } = useContext(PostsContext);
+  const { setPost } = useContext(PostContext);
 
   return (
     <main className="bg-gray-200 p-24">
