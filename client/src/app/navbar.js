@@ -52,7 +52,7 @@ export default function Navbar() {
           </Link>
         </li>
         <li>
-          <Link href="/messageboard" className={linkStyling}>
+          <Link href="/posts" className={linkStyling}>
             Message Board
           </Link>
         </li>
