@@ -36,7 +36,7 @@ export default function Posts() {
               <header className="mb-4">
                 <h2 className="text-xl font-bold">{post.title}</h2>
               </header>
-              <p className="text-sm">{post.content}</p>
+              <p className="text-m">{post.content}</p>
               <footer className="mt-4 text-xs">
                 <p className="text-gray-400">
                   Posted by {post.user.email} on{" "}
@@ -53,12 +53,15 @@ export default function Posts() {
                 <h2 className="text-l font-bold">Comments</h2>
               </header>
               {post.comments && post.comments.length > 0 && (
-                <div className="mt-4 bg-gray-200 px-2 py-4 rounded-md text-blue-500">
+                <div className="mt-4 bg-gray-200 px-2 py-4 rounded-md">
                   <ul>
                     {post.comments.map((comment) => (
                       <li key={comment.id} className="text-sm">
-                        <p>{comment.content}</p>
-                        <p className="text-gray-400 text-xs mt-4">
+                        <p className="text-md text-blue-500">
+                          - {comment.content}
+                        </p>
+                        <p className="text-blue-400 text-xs mt-4 mb-8">
+                          Posted by {comment.user.email} on{" "}
                           {new Date(comment.created_at).toLocaleDateString()}
                         </p>
                       </li>
