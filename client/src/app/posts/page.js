@@ -10,8 +10,19 @@ export default function Posts() {
   const { posts } = useContext(PostsContext);
   const { setPost } = useContext(PostContext);
 
+  //   functions
+
+  const toggleCommentForm = () => {
+    setCommentForm(!commentForm);
+  };
+
+  const handleReplyClick = (post) => {
+    setPost(post);
+    toggleCommentForm();
+  };
+
   return commentForm ? (
-    <PostForm />
+    <PostForm toggleCommentForm={toggleCommentForm} />
   ) : (
     <main className="bg-gray-200 p-24">
       <h1 className="text-gray-800 text-4xl text-center font-bold mb-8">
@@ -34,7 +45,10 @@ export default function Posts() {
                   {new Date(post.created_at).toLocaleDateString()}
                 </p>
               </footer>
-              <button className="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-400 mt-4 transition-all duration-200">
+              <button
+                onClick={handleReplyClick(post)}
+                className="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-400 mt-4 transition-all duration-200"
+              >
                 Reply
               </button>
             </article>
