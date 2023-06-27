@@ -4,7 +4,7 @@ import ipdb
 
 from extensions import db
 from app import app
-from models import User, Aquarium, WaterParameter
+from models import User, Aquarium, WaterParameter, Post
 
 fake = Faker()
 
@@ -128,6 +128,7 @@ aquarium_volumes = [
 def clear_data():
     db.session.query(WaterParameter).delete()
     db.session.query(Aquarium).delete()
+    db.session.query(Post).delete()
     db.session.query(User).delete()
 
 
@@ -181,9 +182,22 @@ def seed_water_parameters():
     db.session.commit()
 
 
+def seed_posts():
+    users = User.query.all()
+    for i in range(10):
+        new_post = Post(
+            user_id=random_choice(users).id,
+            title=fake.sentence(nb_words=6, variable_nb_words=True),
+            content=fake.text(max_nb_chars=500),
+        )
+        db.session.add(new_post)
+    db.session.commit()
+
+
 if __name__ == "__main__":
     with app.app_context():
         clear_data()
         seed_users()
         seed_aquariums()
         seed_water_parameters()
+        seed_posts()
