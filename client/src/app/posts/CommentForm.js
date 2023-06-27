@@ -30,8 +30,9 @@ export default function CommentForm({ toggleCommentForm }) {
     },
     validationSchema: commentSchema,
     onSubmit: (values) => {
-      values.aquarium_id = aquarium.id;
-      fetch("/api/water-parameters", {
+      values.user_id = post.user_id;
+      values.post_id = post.id;
+      fetch("/api/comments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +41,8 @@ export default function CommentForm({ toggleCommentForm }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          aquarium.water_parameters.push(data);
+          const updatedPost = { ...post, comments: [...post.comments, data] };
+          setPost(updatedPost);
           resetForm();
           toggleParameterForm();
         });
