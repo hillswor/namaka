@@ -6,11 +6,11 @@ import { PostsContext, PostContext } from "../AppContext";
 import PostForm from "./PostForm";
 
 export default function Posts() {
-  const [toggleCommentForm, setToggleCommentForm] = useState(false);
+  const [commentForm, setCommentForm] = useState(false);
   const { posts } = useContext(PostsContext);
   const { setPost } = useContext(PostContext);
 
-  return toggleCommentForm ? (
+  return commentForm ? (
     <PostForm />
   ) : (
     <main className="bg-gray-200 p-24">
