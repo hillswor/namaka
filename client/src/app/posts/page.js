@@ -22,19 +22,19 @@ export default function Posts() {
   };
 
   return (
-    <main className="bg-gray-200 p-24">
+    <main className="p-24">
       <h1 className="text-gray-800 text-4xl text-center font-bold mb-8">
         Message Board
       </h1>
       {commentForm && (
         <CommentForm toggleCommentForm={toggleCommentForm} setPost={setPost} />
       )}
-      <section className="flex flex-col border-4 border-blue-500 rounded-md bg-gray-900 p-8 text-white">
+      <section className="flex flex-col text-white">
         {posts &&
           posts.map((post) => (
             <article
               key={post.id}
-              className="bg-gray-800 border-2 border-blue-500 rounded-md p-4 mb-16"
+              className="bg-gray-800 border-4 border-blue-500 rounded-md p-12 mb-16"
             >
               <header className="mb-4">
                 <h2 className="text-xl font-bold">{post.title}</h2>

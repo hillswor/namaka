@@ -4,10 +4,12 @@ import { useEffect, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import { PostContext } from "../AppContext";
+import { UserContext, PostContext, PostsContext } from "../AppContext";
 
 export default function CommentForm({ toggleCommentForm }) {
   const { post, setPost } = useContext(PostContext);
+  const { posts, setPosts } = useContext(PostsContext);
+  const { user } = useContext(UserContext);
 
   const commentSchema = Yup.object().shape({
     content: Yup.string()
@@ -30,7 +32,7 @@ export default function CommentForm({ toggleCommentForm }) {
     },
     validationSchema: commentSchema,
     onSubmit: (values) => {
-      values.user_id = post.user_id;
+      values.user_id = user.id;
       values.post_id = post.id;
       fetch("/api/comments", {
         method: "POST",
@@ -41,13 +43,22 @@ export default function CommentForm({ toggleCommentForm }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          const updatedPost = { ...post, comments: [...post.comments, data] };
-          setPost(updatedPost);
+          // Update the posts data with the new comment
+          const updatedPosts = posts.map((p) => {
+            if (p.id === post.id) {
+              return {
+                ...p,
+                comments: [...p.comments, data],
+              };
+            }
+            return p;
+          });
+          setPosts(updatedPosts);
+
+          // Reset form and toggle the comment form
           resetForm();
-          toggleParameterForm();
+          toggleCommentForm();
         });
-      resetForm();
-      toggleShowForm();
     },
   });
 

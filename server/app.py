@@ -8,7 +8,7 @@ from datetime import date
 import os
 import ipdb
 
-from models import User, Aquarium, WaterParameter, Post
+from models import User, Aquarium, WaterParameter, Post, Comment
 from extensions import db, migrate
 
 load_dotenv()
@@ -176,6 +176,21 @@ class PostResource(Resource):
 
 
 api.add_resource(PostResource, "/api/posts")
+
+
+class CommentsResource(Resource):
+    def post(self):
+        new_comment = Comment(
+            user_id=request.json.get("user_id"),
+            post_id=request.json.get("post_id"),
+            content=request.json.get("content"),
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        return make_response(jsonify(new_comment.to_dict()), 201)
+
+
+api.add_resource(CommentsResource, "/api/comments")
 
 
 if __name__ == "__main__":
