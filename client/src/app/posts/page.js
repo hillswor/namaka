@@ -18,11 +18,19 @@ export default function Posts() {
               key={post.id}
               className="bg-gray-800 border-2 border-blue-500 rounded-md p-4 mb-16"
             >
-              <header>
-                <h2 className="text-lg font-bold mb-2">{post.title}</h2>
+              <header className="mb-4">
+                <h2 className="text-xl font-bold">{post.title}</h2>
               </header>
               <p className="text-sm">{post.content}</p>
-              <p className="text-xs text-blue-500 mt-2">- {post.user.email}</p>
+              <footer className="mt-4 text-xs">
+                <p className="text-gray-400">
+                  Posted by {post.user.email} on{" "}
+                  {new Date(post.created_at).toLocaleDateString()}
+                </p>
+              </footer>
+              <button className="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-400 mt-4 transition-all duration-200">
+                Reply
+              </button>
             </article>
           ))}
       </section>
