@@ -46,7 +46,7 @@ export default function Posts() {
                 </p>
               </footer>
               <button
-                onClick={handleReplyClick(post)}
+                onClick={() => handleReplyClick(post)}
                 className="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-400 mt-4 transition-all duration-200"
               >
                 Reply
