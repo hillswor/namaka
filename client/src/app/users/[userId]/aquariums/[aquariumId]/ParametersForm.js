@@ -13,7 +13,7 @@ export default function ParametersForm({ toggleParameterForm, aquarium }) {
     "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 w-full";
   const buttonStyling =
     "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200";
-  const errorStyling = "bg-red-500 text-white p-2 mb-2 rounded";
+  const errorStyling = "text-red-500 p-2 mb-2 rounded";
 
   const parametersSchema = yup.object().shape({
     salinity: yup
@@ -111,8 +111,8 @@ export default function ParametersForm({ toggleParameterForm, aquarium }) {
       <button onClick={toggleParameterForm} className={buttonStyling}>
         Back
       </button>
-      <form onSubmit={handleSubmit} className={formStyling}>
-        <label htmlFor="salinity" className={labelStyling}>
+      <form onSubmit={handleSubmit} className={"w-full"}>
+        <label htmlFor="salinity" className={"labelStyling"}>
           Salinity (d SG)
         </label>
         <input
@@ -240,15 +240,10 @@ export default function ParametersForm({ toggleParameterForm, aquarium }) {
         {touched.alkalinity && errors.alkalinity ? (
           <p className={errorStyling}>{errors.alkalinity}</p>
         ) : null}
-        <button
-          type="submit"
-          className={
-            "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
-          }
-        >
-          Submit
-        </button>
       </form>
+      <button type="submit" className={buttonStyling}>
+        Submit
+      </button>
     </section>
   );
 }
