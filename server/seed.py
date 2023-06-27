@@ -4,7 +4,7 @@ import ipdb
 
 from extensions import db
 from app import app
-from models import User, Aquarium, WaterParameter, Post
+from models import User, Aquarium, WaterParameter, Post, Comment
 
 fake = Faker()
 
@@ -194,6 +194,19 @@ def seed_posts():
     db.session.commit()
 
 
+def seed_comments():
+    users = User.query.all()
+    posts = Post.query.all()
+    for i in range(25):
+        new_comment = Comment(
+            user_id=random_choice(users).id,
+            post_id=random_choice(posts).id,
+            content=fake.text(max_nb_chars=300),
+        )
+        db.session.add(new_comment)
+    db.session.commit()
+
+
 if __name__ == "__main__":
     with app.app_context():
         clear_data()
@@ -201,3 +214,4 @@ if __name__ == "__main__":
         seed_aquariums()
         seed_water_parameters()
         seed_posts()
+        seed_comments()

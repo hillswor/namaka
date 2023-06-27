@@ -245,6 +245,7 @@ class Post(db.Model):
             "content": self.content,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
+            "comments": [comment.to_dict() for comment in self.comments],
         }
 
     def __repr__(self):
