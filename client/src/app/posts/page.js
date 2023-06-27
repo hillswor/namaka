@@ -1,14 +1,18 @@
 "use client";
 
 import { useContext, useState } from "react";
+
 import { PostsContext, PostContext } from "../AppContext";
+import PostForm from "./PostForm";
 
 export default function Posts() {
   const [toggleCommentForm, setToggleCommentForm] = useState(false);
   const { posts } = useContext(PostsContext);
   const { setPost } = useContext(PostContext);
 
-  return (
+  return toggleCommentForm ? (
+    <PostForm />
+  ) : (
     <main className="bg-gray-200 p-24">
       <h1 className="text-gray-800 text-4xl text-center font-bold mb-8">
         Message Board
