@@ -26,6 +26,9 @@ export default function Posts() {
       <h1 className="text-gray-800 text-4xl text-center font-bold mb-8">
         Message Board
       </h1>
+      {commentForm && (
+        <CommentForm toggleCommentForm={toggleCommentForm} setPost={setPost} />
+      )}
       <section className="flex flex-col border-4 border-blue-500 rounded-md bg-gray-900 p-8 text-white">
         {posts &&
           posts.map((post) => (
