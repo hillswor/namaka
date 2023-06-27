@@ -3,7 +3,7 @@
 import { useContext, useState } from "react";
 
 import { PostsContext, PostContext } from "../AppContext";
-import PostForm from "./PostForm";
+import CommentForm from "./CommentForm";
 
 export default function Posts() {
   const [commentForm, setCommentForm] = useState(false);
@@ -22,7 +22,7 @@ export default function Posts() {
   };
 
   return commentForm ? (
-    <PostForm toggleCommentForm={toggleCommentForm} />
+    <CommentForm toggleCommentForm={toggleCommentForm} />
   ) : (
     <main className="bg-gray-200 p-24">
       <h1 className="text-gray-800 text-4xl text-center font-bold mb-8">
