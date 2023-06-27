@@ -25,6 +25,20 @@ export default function AppContextProvider({ children }) {
       });
   }, []);
 
+  useEffect(() => {
+    fetch("/api/posts", {
+      method: "GET",
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        setPosts(data);
+      });
+  }, []);
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <AquariumContext.Provider value={{ aquarium, setAquarium }}>

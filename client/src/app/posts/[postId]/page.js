@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Post() {
   return (
-    <div>
+    <main>
       <h1>Post</h1>
-    </div>
+    </main>
   );
 }

@@ -8,7 +8,7 @@ from datetime import date
 import os
 import ipdb
 
-from models import User, Aquarium, WaterParameter
+from models import User, Aquarium, WaterParameter, Post
 from extensions import db, migrate
 
 load_dotenv()
@@ -169,7 +169,7 @@ api.add_resource(WaterParameterResource, "/api/water-parameters")
 # Post routes
 
 
-def PostResource(Resource):
+class PostResource(Resource):
     def get(self):
         posts = Post.query.all()
         return make_response(jsonify([post.to_dict() for post in posts]), 200)
