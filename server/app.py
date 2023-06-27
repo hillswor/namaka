@@ -165,6 +165,19 @@ class WaterParameterResource(Resource):
 
 api.add_resource(WaterParameterResource, "/api/water-parameters")
 
+
+# Post routes
+
+
+def PostResource(Resource):
+    def get(self):
+        posts = Post.query.all()
+        return make_response(jsonify([post.to_dict() for post in posts]), 200)
+
+
+api.add_resource(PostResource, "/api/posts")
+
+
 if __name__ == "__main__":
     with app.app_context():
         app.run(port=5555, debug=True)
