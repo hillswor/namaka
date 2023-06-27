@@ -52,9 +52,19 @@ export default function CommentForm({ toggleCommentForm }) {
   });
 
   return (
-    <div>
-      <button onClick={toggleCommentForm}>Back</button>
-      <h1>{post.user_id}</h1>
-    </div>
+    <main>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="content">Content</label>
+        <input
+          id="content"
+          name="content"
+          type="text"
+          onChange={handleChange}
+          value={values.content}
+        />
+        {errors.content && touched.content ? <div>{errors.content}</div> : null}
+        <button type="submit">Submit</button>
+      </form>
+    </main>
   );
 }

@@ -21,9 +21,7 @@ export default function Posts() {
     toggleCommentForm();
   };
 
-  return commentForm ? (
-    <CommentForm toggleCommentForm={toggleCommentForm} />
-  ) : (
+  return (
     <main className="bg-gray-200 p-24">
       <h1 className="text-gray-800 text-4xl text-center font-bold mb-8">
         Message Board
@@ -51,6 +49,23 @@ export default function Posts() {
               >
                 Reply
               </button>
+              <header className="mb-2 mt-8">
+                <h2 className="text-l font-bold">Comments</h2>
+              </header>
+              {post.comments && post.comments.length > 0 && (
+                <div className="mt-4 bg-gray-200 px-2 py-4 rounded-md text-blue-500">
+                  <ul>
+                    {post.comments.map((comment) => (
+                      <li key={comment.id} className="text-sm">
+                        <p>{comment.content}</p>
+                        <p className="text-gray-400 text-xs mt-4">
+                          {new Date(comment.created_at).toLocaleDateString()}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </article>
           ))}
       </section>
