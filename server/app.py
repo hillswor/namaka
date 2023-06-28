@@ -128,6 +128,26 @@ class AquariumResource(Resource):
 api.add_resource(AquariumResource, "/api/aquariums")
 
 
+class AquariumByIdResource(Resource):
+    def patch(self, id):
+        data = request.get_json()
+        aquarium = Aquarium.query.get(id)
+        aquarium.brand = data.get("brand")
+        aquarium.model = data.get("model")
+        aquarium.volume = data.get("volume")
+        db.session.commit()
+        return make_response(jsonify(aquarium.to_dict()), 200)
+
+    def delete(self, id):
+        aquarium = Aquarium.query.get(id)
+        db.session.delete(aquarium)
+        db.session.commit()
+        return make_response(jsonify({"message": "Aquarium deleted"}), 200)
+
+
+api.add_resource(AquariumByIdResource, "/api/aquariums/<int:id>")
+
+
 class WaterParameterResource(Resource):
     def get(self):
         pass
