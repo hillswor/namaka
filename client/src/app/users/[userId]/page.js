@@ -12,6 +12,7 @@ export default function UserPage() {
   const { user, setUser } = useContext(UserContext);
   const { setAquarium } = useContext(AquariumContext);
   const [showForm, setShowForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const router = useRouter();
 
   const formStyling =
@@ -29,7 +30,7 @@ export default function UserPage() {
   const mainStyling =
     "flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-16 mb-16 bg-gray-800 text-white";
   const aquariumStyling =
-    "flex items-center space-x-4 border-2 border-blue-500 rounded-lg p-2 mt-4 bg-gray-200 text-blue-500";
+    "flex items-center justify-between space-x-4 border-2 border-blue-500 rounded-lg p-2 mt-4 bg-gray-200 text-blue-500";
 
   const AquariumSchema = Yup.object().shape({
     brand: Yup.string().required("Required"),
@@ -170,19 +171,41 @@ export default function UserPage() {
                     <p className={"flex items-center text-gray-800 mb-2"}>
                       {aquarium.volume} gallons
                     </p>
-                    <button
-                      className={
-                        "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
-                      }
-                      onClick={() =>
-                        setAquarium(aquarium) &
-                        router.push(
-                          `/users/${user.id}/aquariums/${aquarium.id}`
-                        )
-                      }
-                    >
-                      View Aquarium
-                    </button>
+                    <div className="flex">
+                      <button
+                        className={
+                          "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
+                        }
+                        onClick={() =>
+                          setAquarium(aquarium) &
+                          router.push(
+                            `/users/${user.id}/aquariums/${aquarium.id}`
+                          )
+                        }
+                      >
+                        View
+                      </button>
+                      <button
+                        className={
+                          "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 ml-2"
+                        }
+                        onClick={() =>
+                          console.log(`Edit aquarium with ID ${aquarium.id}`)
+                        }
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className={
+                          "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 ml-2"
+                        }
+                        onClick={() =>
+                          console.log(`Delete aquarium with ID ${aquarium.id}`)
+                        }
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </article>
                 </li>
               ))}
