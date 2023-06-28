@@ -28,7 +28,6 @@ export default function UserPage() {
     "rounded-lg shadow-lg transform transition duration-500 hover:scale-105";
   const mainStyling =
     "flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-16 mb-16 bg-gray-800 text-white";
-  const userHeaderStyling = "text-3xl font-bold mt-8 mb-4";
   const aquariumStyling =
     "flex items-center space-x-4 border-2 border-blue-500 rounded-lg p-2 mt-4 bg-gray-200 text-blue-500";
 
@@ -130,7 +129,9 @@ export default function UserPage() {
 
   return (
     <main className={mainStyling}>
-      <h1 className={userHeaderStyling}>Hello, {user.email}</h1>
+      <h1 className={"text-3xl font-bold mt-8 mb-6"}>
+        Hello, {user.first_name}
+      </h1>
       {!showForm && (
         <button
           onClick={() => setShowForm(true)}

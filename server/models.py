@@ -112,6 +112,14 @@ class User(db.Model):
             "created_at": self.created_at,
             "last_login": self.last_login,
             "aquariums": [aquarium.to_dict() for aquarium in self.aquariums],
+            "shared_aquariums": [
+                {
+                    "id": shared_aquarium.id,
+                    "user_id": shared_aquarium.user_id,
+                    "aquarium": shared_aquarium.aquarium.to_dict(),
+                }
+                for shared_aquarium in self.shared_aquariums
+            ],
         }
 
     def __repr__(self):
@@ -177,6 +185,7 @@ class UserAquarium(db.Model):
             "aquarium_id": self.aquarium_id,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
+            "aquarium": self.aquarium.to_dict(),
         }
 
     def __repr__(self):
