@@ -8,7 +8,7 @@ from datetime import date
 import os
 import ipdb
 
-from models import User, Aquarium, WaterParameter, Post, Comment
+from models import User, Aquarium, WaterParameter, Post, Comment, UserAquarium
 from extensions import db, migrate
 
 load_dotenv()
@@ -139,9 +139,17 @@ class AquariumByIdResource(Resource):
         return make_response(jsonify(aquarium.to_dict()), 200)
 
     def delete(self, id):
+        ipdb.set_trace()
+        userAquariums = UserAquarium.query.filter_by(aquarium_id=id).all()
         aquarium = Aquarium.query.get(id)
+
+        if userAquariums:
+            for userAquarium in userAquariums:
+                db.session.delete(userAquarium)
+
         db.session.delete(aquarium)
         db.session.commit()
+
         return make_response(jsonify({"message": "Aquarium deleted"}), 200)
 
 
