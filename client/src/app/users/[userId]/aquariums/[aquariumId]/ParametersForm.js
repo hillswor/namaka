@@ -1,13 +1,15 @@
 "use client";
 
-import React from "react";
+import { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { AquariumContext } from "../../../../AppContext";
 
-export default function ParametersForm({ toggleParameterForm, aquarium }) {
+export default function ParametersForm({ toggleParameterForm }) {
+  const { aquarium, setAquarium } = useContext(AquariumContext);
+
   const sectionStyling =
     "flex flex-col items-center justify-center border-4 border-blue-500 bg-gray-800 text-white rounded-lg max-w-xl mx-auto p-8 mt-10 sm:mt-16";
-  const formStyling = "w-full";
   const labelStyling = "block text-white text-lg mb-2";
   const inputStyling =
     "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 w-full";
@@ -97,9 +99,15 @@ export default function ParametersForm({ toggleParameterForm, aquarium }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          aquarium.water_parameters.push(data);
+          setAquarium((prevAquarium) => {
+            const updatedParameters = [...prevAquarium.water_parameters, data];
+            return { ...prevAquarium, water_parameters: updatedParameters };
+          });
           resetForm();
           toggleParameterForm();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
         });
       resetForm();
       toggleShowForm();
@@ -240,10 +248,17 @@ export default function ParametersForm({ toggleParameterForm, aquarium }) {
         {touched.alkalinity && errors.alkalinity ? (
           <p className={errorStyling}>{errors.alkalinity}</p>
         ) : null}
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className={
+              "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 mt-4"
+            }
+          >
+            Submit
+          </button>
+        </div>
       </form>
-      <button type="submit" className={buttonStyling}>
-        Submit
-      </button>
     </section>
   );
 }

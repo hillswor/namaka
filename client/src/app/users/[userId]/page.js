@@ -190,6 +190,52 @@ export default function UserPage() {
           ) : (
             <p className="text-lg mt-8">You currently have no aquariums.</p>
           )}
+          {user.shared_aquariums.length > 0 && (
+            <>
+              <h2 className="text-2xl font-bold mb-2 mt-6 text-center">
+                Aquariums Shared With You
+              </h2>
+              <ul>
+                {user.shared_aquariums.map((sharedAquarium) => (
+                  <li key={sharedAquarium.id} className={aquariumStyling}>
+                    <figure className="flex-shrink-0">
+                      <Image
+                        src="/reef-tank.jpeg"
+                        alt="Reef Tank"
+                        width={100}
+                        height={100}
+                        className={imgStyling}
+                      />
+                    </figure>
+                    <article>
+                      <p className={"flex items-center text-gray-800 mb-2"}>
+                        {sharedAquarium.aquarium.brand}
+                      </p>
+                      <p className={"flex items-center text-gray-800 mb-2"}>
+                        {sharedAquarium.aquarium.model}
+                      </p>
+                      <p className={"flex items-center text-gray-800 mb-2"}>
+                        {sharedAquarium.aquarium.volume} gallons
+                      </p>
+                      <button
+                        className={
+                          "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
+                        }
+                        onClick={() =>
+                          setAquarium(sharedAquarium.aquarium) &
+                          router.push(
+                            `/users/${user.id}/aquariums/${sharedAquarium.aquarium.id}`
+                          )
+                        }
+                      >
+                        View Aquarium
+                      </button>
+                    </article>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
       ) : (
         renderForm()

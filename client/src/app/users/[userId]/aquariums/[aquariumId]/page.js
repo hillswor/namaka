@@ -289,10 +289,7 @@ export default function AquariumPage() {
   };
 
   return parameterForm ? (
-    <ParmatersForm
-      toggleParameterForm={toggleParameterForm}
-      aquarium={aquarium}
-    />
+    <ParmatersForm toggleParameterForm={toggleParameterForm} />
   ) : (
     <main className={mainStyling}>
       <button
