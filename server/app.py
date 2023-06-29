@@ -139,7 +139,6 @@ class AquariumByIdResource(Resource):
         return make_response(jsonify(aquarium.to_dict()), 200)
 
     def delete(self, id):
-        ipdb.set_trace()
         userAquariums = UserAquarium.query.filter_by(aquarium_id=id).all()
         aquarium = Aquarium.query.get(id)
 

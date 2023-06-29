@@ -97,6 +97,16 @@ export default function Navbar() {
       <ul className={"flex items-center space-x-6 text-lg"}>
         <li>
           <Link
+            href="/"
+            className={
+              "hover:text-blue-400 transition duration-200 ease-in-out cursor-pointer"
+            }
+          >
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link
             href="/login"
             className={
               "hover:text-blue-400 transition duration-200 ease-in-out cursor-pointer"

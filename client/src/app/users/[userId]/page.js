@@ -26,7 +26,6 @@ export default function UserPage() {
   }
 
   function handleDelete(aquarium) {
-    debugger;
     fetch(`/api/aquariums/${aquarium.id}`, {
       method: "DELETE",
     }).then((res) => {
