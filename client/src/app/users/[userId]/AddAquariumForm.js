@@ -114,7 +114,7 @@ export default function AddAquariumForm({ toggleAddForm }) {
           onBlur={handleBlur}
           placeholder="Volume (gallons)"
           className={
-            "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
+            "number-input border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
           }
         />
         {touched.volume && errors.volume ? (

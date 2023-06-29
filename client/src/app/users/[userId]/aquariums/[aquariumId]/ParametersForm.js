@@ -8,14 +8,9 @@ import { AquariumContext } from "../../../../AppContext";
 export default function ParametersForm({ toggleParameterForm }) {
   const { aquarium, setAquarium } = useContext(AquariumContext);
 
-  const sectionStyling =
-    "flex flex-col items-center justify-center border-4 border-blue-500 bg-gray-800 text-white rounded-lg max-w-xl mx-auto p-8 mt-10 sm:mt-16";
   const labelStyling = "block text-white text-lg mb-2";
-  const inputStyling =
-    "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 w-full";
   const buttonStyling =
     "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200";
-  const errorStyling = "text-red-500 p-2 mb-2 rounded";
 
   const parametersSchema = yup.object().shape({
     salinity: yup
@@ -115,12 +110,16 @@ export default function ParametersForm({ toggleParameterForm }) {
   });
 
   return (
-    <section className={sectionStyling}>
+    <section
+      className={
+        "flex flex-col items-center justify-center border-4 border-blue-500 bg-gray-800 text-white rounded-lg max-w-xl mx-auto p-8 mt-10 sm:mt-16"
+      }
+    >
       <button onClick={toggleParameterForm} className={buttonStyling}>
         Back
       </button>
       <form onSubmit={handleSubmit} className={"w-full"}>
-        <label htmlFor="salinity" className={"labelStyling"}>
+        <label htmlFor="salinity" className={"block text-white text-lg mb-2"}>
           Salinity (d SG)
         </label>
         <input
@@ -131,12 +130,18 @@ export default function ParametersForm({ toggleParameterForm }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 1.025 - 1.027"
-          className={inputStyling}
+          className={
+            "number-input border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
+          }
         />
         {touched.salinity && errors.salinity ? (
-          <p className={errorStyling}>{errors.salinity}</p>
-        ) : null}
-        <label htmlFor="ph" className={labelStyling}>
+          <p className={"text-red-500 mb-2 rounded text-xs"}>
+            {errors.salinity}
+          </p>
+        ) : (
+          <div className="h-6"></div>
+        )}
+        <label htmlFor="ph" className={"block text-white text-lg mb-2"}>
           pH
         </label>
         <input
@@ -147,12 +152,16 @@ export default function ParametersForm({ toggleParameterForm }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 7.8 - 8.5"
-          className={inputStyling}
+          className={
+            "number-input border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
+          }
         />
         {touched.ph && errors.ph ? (
-          <p className={errorStyling}>{errors.ph}</p>
-        ) : null}
-        <label htmlFor="ammonia" className={labelStyling}>
+          <p className={"text-red-500 mb-2 rounded text-xs"}>{errors.ph}</p>
+        ) : (
+          <div className="h-6"></div>
+        )}
+        <label htmlFor="ammonia" className={"block text-white text-lg mb-2"}>
           Ammonia (ppm)
         </label>
         <input
@@ -163,12 +172,18 @@ export default function ParametersForm({ toggleParameterForm }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 0 - 0.1 ppm"
-          className={inputStyling}
+          className={
+            "number-input border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
+          }
         />
         {touched.ammonia && errors.ammonia ? (
-          <p className={errorStyling}>{errors.ammonia}</p>
-        ) : null}
-        <label htmlFor="nitrate" className={labelStyling}>
+          <p className={"text-red-500 mb-2 rounded text-xs"}>
+            {errors.ammonia}
+          </p>
+        ) : (
+          <div className="h-6"></div>
+        )}
+        <label htmlFor="nitrate" className={"block text-white text-lg mb-2"}>
           Nitrate (ppm)
         </label>
         <input
@@ -179,12 +194,18 @@ export default function ParametersForm({ toggleParameterForm }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 0 - 5 ppm"
-          className={inputStyling}
+          className={
+            "number-input border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
+          }
         />
         {touched.nitrate && errors.nitrate ? (
-          <p className={errorStyling}>{errors.nitrate}</p>
-        ) : null}
-        <label htmlFor="phosphate" className={labelStyling}>
+          <p className={"text-red-500 mb-2 rounded text-xs"}>
+            {errors.nitrate}
+          </p>
+        ) : (
+          <div className="h-6"></div>
+        )}
+        <label htmlFor="phosphate" className={"block text-white text-lg mb-2"}>
           Phosphate (ppm)
         </label>
         <input
@@ -195,12 +216,18 @@ export default function ParametersForm({ toggleParameterForm }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 0 - 0.03 ppm"
-          className={inputStyling}
+          className={
+            "number-input border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
+          }
         />
         {touched.phosphate && errors.phosphate ? (
-          <p className={errorStyling}>{errors.phosphate}</p>
-        ) : null}
-        <label htmlFor="calcium" className={labelStyling}>
+          <p className={"text-red-500 mb-2 rounded text-xs"}>
+            {errors.phosphate}
+          </p>
+        ) : (
+          <div className="h-6"></div>
+        )}
+        <label htmlFor="calcium" className={"block text-white text-lg mb-2"}>
           Calcium (ppm)
         </label>
         <input
@@ -211,12 +238,18 @@ export default function ParametersForm({ toggleParameterForm }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 375 - 450 ppm"
-          className={inputStyling}
+          className={
+            "number-input border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
+          }
         />
         {touched.calcium && errors.calcium ? (
-          <p className={errorStyling}>{errors.calcium}</p>
-        ) : null}
-        <label htmlFor="magnesium" className={labelStyling}>
+          <p className={"text-red-500 mb-2 rounded text-xs"}>
+            {errors.calcium}
+          </p>
+        ) : (
+          <div className="h-6"></div>
+        )}
+        <label htmlFor="magnesium" className={"block text-white text-lg mb-2"}>
           Magnesium (ppm)
         </label>
         <input
@@ -227,12 +260,18 @@ export default function ParametersForm({ toggleParameterForm }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 1250 - 1350 ppm"
-          className={inputStyling}
+          className={
+            "number-input border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
+          }
         />
         {touched.magnesium && errors.magnesium ? (
-          <p className={errorStyling}>{errors.magnesium}</p>
-        ) : null}
-        <label htmlFor="alkalinity" className={labelStyling}>
+          <p className={"text-red-500 mb-2 rounded text-xs"}>
+            {errors.magnesium}
+          </p>
+        ) : (
+          <div className="h-6"></div>
+        )}
+        <label htmlFor="alkalinity" className={"block text-white text-lg mb-2"}>
           Alkalinity (dKH)
         </label>
         <input
@@ -243,11 +282,17 @@ export default function ParametersForm({ toggleParameterForm }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Safe Range 7 - 11 dKH"
-          className={inputStyling}
+          className={
+            "number-input border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
+          }
         />
         {touched.alkalinity && errors.alkalinity ? (
-          <p className={errorStyling}>{errors.alkalinity}</p>
-        ) : null}
+          <p className={"text-red-500 mb-2 rounded text-xs"}>
+            {errors.alkalinity}
+          </p>
+        ) : (
+          <div className="h-6"></div>
+        )}
         <div className="flex justify-center">
           <button
             type="submit"
