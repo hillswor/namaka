@@ -1,8 +1,6 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Line } from "react-chartjs-2";
