@@ -84,7 +84,7 @@ export default function LoginForm() {
           Password
         </label>
         <input
-          type="text"
+          type="password"
           name="password"
           id="password"
           value={values.password}
