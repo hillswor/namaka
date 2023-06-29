@@ -47,33 +47,6 @@ export default function AddAquariumForm({ toggleAddForm }) {
     },
   });
 
-  const formik = useFormik({
-    initialValues: {
-      brand: "",
-      model: "",
-      volume: "",
-    },
-    validationSchema: AquariumSchema,
-    onSubmit: (values, { resetForm }) => {
-      values.owner_id = user.id;
-      fetch("/api/aquariums", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          const updatedUser = { ...user, aquariums: [...user.aquariums, data] };
-          setUser(updatedUser);
-          toggleAddForm();
-        });
-      resetForm();
-      setShowForm(false);
-    },
-  });
-
   return (
     <section
       className={
@@ -105,11 +78,9 @@ export default function AddAquariumForm({ toggleAddForm }) {
           }
         />
         {touched.brand && errors.brand ? (
-          <p className={"text-red-500 p-2 mb-4 rounded text-s"}>
-            {errors.brand}
-          </p>
+          <p className={"text-red-500 mb-2 rounded text-xs"}>{errors.brand}</p>
         ) : (
-          <div className="h-14"></div>
+          <div className="h-6"></div>
         )}
         <label htmlFor="model" className={"block text-white text-lg mb-2"}>
           Model
@@ -123,18 +94,16 @@ export default function AddAquariumForm({ toggleAddForm }) {
           onBlur={handleBlur}
           placeholder="Model"
           className={
-            "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 w-full"
+            "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
           }
         />
         {touched.model && errors.model ? (
-          <p className={"text-red-500 p-2 mb-4 rounded text-s"}>
-            {errors.model}
-          </p>
+          <p className={"text-red-500 mb-2 rounded text-xs"}>{errors.model}</p>
         ) : (
-          <div className="h-14"></div>
+          <div className="h-6"></div>
         )}
         <label htmlFor="volume" className={"block text-white text-lg mb-2"}>
-          Volume
+          Volume (gallons)
         </label>
         <input
           id="volume"
@@ -143,17 +112,15 @@ export default function AddAquariumForm({ toggleAddForm }) {
           value={values.volume}
           onChange={handleChange}
           onBlur={handleBlur}
-          placeholder="Volume"
+          placeholder="Volume (gallons)"
           className={
-            "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 w-full"
+            "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
           }
         />
         {touched.volume && errors.volume ? (
-          <p className={"text-red-500 p-2 mb-4 rounded text-s"}>
-            {errors.volume}
-          </p>
+          <p className={"text-red-500 mb-2 rounded text-xs"}>{errors.volume}</p>
         ) : (
-          <div className="h-14"></div>
+          <div className="h-6"></div>
         )}
         <div className="flex justify-center">
           <button
