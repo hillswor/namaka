@@ -101,12 +101,16 @@ export default function AddAquariumForm({ toggleAddForm }) {
           onBlur={handleBlur}
           placeholder="Brand"
           className={
-            "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 w-full"
+            "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
           }
         />
         {touched.brand && errors.brand ? (
-          <p className={"text-red-500 p-2 mb-2 rounded"}>{errors.brand}</p>
-        ) : null}
+          <p className={"text-red-500 p-2 mb-4 rounded text-s"}>
+            {errors.brand}
+          </p>
+        ) : (
+          <div className="h-14"></div>
+        )}
         <label htmlFor="model" className={"block text-white text-lg mb-2"}>
           Model
         </label>
@@ -123,8 +127,12 @@ export default function AddAquariumForm({ toggleAddForm }) {
           }
         />
         {touched.model && errors.model ? (
-          <p className={"text-red-500 p-2 mb-2 rounded"}>{errors.model}</p>
-        ) : null}
+          <p className={"text-red-500 p-2 mb-4 rounded text-s"}>
+            {errors.model}
+          </p>
+        ) : (
+          <div className="h-14"></div>
+        )}
         <label htmlFor="volume" className={"block text-white text-lg mb-2"}>
           Volume
         </label>
@@ -140,6 +148,13 @@ export default function AddAquariumForm({ toggleAddForm }) {
             "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 w-full"
           }
         />
+        {touched.volume && errors.volume ? (
+          <p className={"text-red-500 p-2 mb-4 rounded text-s"}>
+            {errors.volume}
+          </p>
+        ) : (
+          <div className="h-14"></div>
+        )}
         <div className="flex justify-center">
           <button
             type="submit"
