@@ -60,6 +60,8 @@ const stateCodes = [
 ];
 
 const SignupSchema = Yup.object().shape({
+  firstName: Yup.string().required("Required"),
+  lastName: Yup.string().required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string().required("Required"),
   confirmPassword: Yup.string()
@@ -80,16 +82,24 @@ export default function Signup() {
   const { setUser } = useContext(UserContext);
 
   const formStyling =
-    "flex flex-col items-center justify-center border-4 border-blue-500 bg-gray-800 text-white rounded-lg max-w-xl mx-auto p-8 mt-10 sm:mt-16";
+    "flex flex-col items-center border-4 border-blue-500 bg-gray-800 text-white rounded-lg max-w-xl mx-auto p-8 mt-10 sm:mt-16";
   const labelStyling = "block text-white text-lg mb-2";
   const inputStyling =
-    "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-4 w-full";
+    "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full";
   const buttonStyling =
     "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200";
-  const errorStyling = "bg-red-500 text-white p-2 mb-2 rounded";
+  const errorStyling = "text-red-500 mb-2 rounded text-xs";
   const router = useRouter();
 
-  const formik = useFormik({
+  const {
+    values,
+    handleBlur,
+    handleChange,
+    errors,
+    touched,
+    resetForm,
+    handleSubmit,
+  } = useFormik({
     initialValues: {
       firstName: "",
       lastName: "",
@@ -101,7 +111,7 @@ export default function Signup() {
     },
     validationSchema: SignupSchema,
     validateOnChange: true,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       fetch("/api/users", {
         method: "POST",
         headers: {
@@ -120,7 +130,7 @@ export default function Signup() {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className={formStyling}>
+    <form onSubmit={handleSubmit} className={formStyling}>
       <label htmlFor="firstName" className={labelStyling}>
         First Name
       </label>
@@ -128,13 +138,17 @@ export default function Signup() {
         id="firstName"
         name="firstName"
         type="firstName"
-        onChange={formik.handleChange}
-        value={formik.values.firstName}
+        value={values.firstName}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="First Name"
         className={inputStyling}
       />
-      {formik.errors.firstName && formik.touched.firstName ? (
-        <div className={errorStyling}>{formik.errors.firstName}</div>
-      ) : null}
+      {errors.firstName && touched.firstName ? (
+        <div className={errorStyling}>{errors.firstName}</div>
+      ) : (
+        <div className="h-6"></div>
+      )}
       <label htmlFor="lastName" className={labelStyling}>
         Last Name
       </label>
@@ -142,13 +156,17 @@ export default function Signup() {
         id="lastName"
         name="lastName"
         type="lastName"
-        onChange={formik.handleChange}
-        value={formik.values.lastName}
+        value={values.lastName}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Last Name"
         className={inputStyling}
       />
-      {formik.errors.lastName && formik.touched.lastName ? (
-        <div className={errorStyling}>{formik.errors.lastName}</div>
-      ) : null}
+      {errors.lastName && touched.lastName ? (
+        <div className={errorStyling}>{errors.lastName}</div>
+      ) : (
+        <div className="h-6"></div>
+      )}
       <label htmlFor="email" className={labelStyling}>
         Email Address
       </label>
@@ -156,13 +174,17 @@ export default function Signup() {
         id="email"
         name="email"
         type="email"
-        onChange={formik.handleChange}
-        value={formik.values.email}
+        value={values.email}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Email Address"
         className={inputStyling}
       />
-      {formik.errors.email && formik.touched.email ? (
-        <div className={errorStyling}>{formik.errors.email}</div>
-      ) : null}
+      {errors.email && touched.email ? (
+        <div className={errorStyling}>{errors.email}</div>
+      ) : (
+        <div className="h-6"></div>
+      )}
       <label htmlFor="password" className={labelStyling}>
         Password
       </label>
@@ -170,13 +192,17 @@ export default function Signup() {
         id="password"
         name="password"
         type="password"
-        onChange={formik.handleChange}
-        value={formik.values.password}
+        value={values.password}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Password"
         className={inputStyling}
       />
-      {formik.errors.password && formik.touched.password ? (
-        <div className={errorStyling}>{formik.errors.password}</div>
-      ) : null}
+      {errors.password && touched.password ? (
+        <div className={errorStyling}>{errors.password}</div>
+      ) : (
+        <div className="h-6"></div>
+      )}
       <label htmlFor="confirmPassword" className={labelStyling}>
         Confirm Password
       </label>
@@ -184,13 +210,17 @@ export default function Signup() {
         id="confirmPassword"
         name="confirmPassword"
         type="password"
-        onChange={formik.handleChange}
-        value={formik.values.confirmPassword}
+        value={values.confirmPassword}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Confirm Password"
         className={inputStyling}
       />
-      {formik.errors.confirmPassword && formik.touched.confirmPassword ? (
-        <div className={errorStyling}>{formik.errors.confirmPassword}</div>
-      ) : null}
+      {errors.confirmPassword && touched.confirmPassword ? (
+        <div className={errorStyling}>{errors.confirmPassword}</div>
+      ) : (
+        <div className="h-6"></div>
+      )}
       <label htmlFor="city" className={labelStyling}>
         City
       </label>
@@ -198,12 +228,14 @@ export default function Signup() {
         id="city"
         name="city"
         type="city"
-        onChange={formik.handleChange}
-        value={formik.values.city}
+        value={values.city}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="City"
         className={inputStyling}
       />
-      {formik.errors.city && formik.touched.city ? (
-        <div className={errorStyling}>{formik.errors.city}</div>
+      {errors.city && touched.city ? (
+        <div className={errorStyling}>{errors.city}</div>
       ) : null}
       <label htmlFor="state" className={labelStyling}>
         State
@@ -212,15 +244,19 @@ export default function Signup() {
         id="state"
         name="state"
         type="state"
-        onChange={formik.handleChange}
-        value={formik.values.state}
+        value={values.state}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="State"
         className={inputStyling}
       />
-      {formik.errors.state && formik.touched.state ? (
-        <div className={errorStyling}>{formik.errors.state}</div>
-      ) : null}
+      {errors.state && touched.state ? (
+        <div className={errorStyling}>{errors.state}</div>
+      ) : (
+        <div className="h-6"></div>
+      )}
       <button type="submit" className={buttonStyling}>
-        Submit
+        Register
       </button>
     </form>
   );

@@ -40,8 +40,8 @@ class UserResource(Resource):
 
     def post(self):
         data = request.get_json()
-        first_name = data.get("first_name")
-        last_name = data.get("last_name")
+        first_name = data.get("firstName")
+        last_name = data.get("lastName")
         email = data.get("email")
         password = data.get("password")
         city = data.get("city")
@@ -50,7 +50,7 @@ class UserResource(Resource):
         new_user = User(
             first_name=first_name.title(),
             last_name=last_name.title(),
-            email=email,
+            email=email.lower(),
             password=password,
             city=city.title(),
             state=state.upper(),
