@@ -3,7 +3,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from flask_bcrypt import Bcrypt
 import re
-from datetime import date
+from datetime import datetime
 
 from extensions import db
 
@@ -197,7 +197,7 @@ class WaterParameter(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     aquarium_id = db.Column(db.Integer, db.ForeignKey("aquariums.id"))
-    date_recorded = db.Column(db.Date, nullable=False, default=date.today)
+    date_recorded = db.Column(db.Date, nullable=False, default=datetime.utcnow().date)
     salinity = db.Column(db.Float)
     ph = db.Column(db.Float)
     ammonia = db.Column(db.Float)

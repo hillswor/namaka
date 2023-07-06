@@ -16,7 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={robotoFlex.className}>
-      <body className="bg-gray-200 min-h-screen">
+      <body className="max-h-screen">
         <UserProvider>
           <Navbar />
           {children}

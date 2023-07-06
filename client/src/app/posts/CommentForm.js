@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import { UserContext, PostContext, PostsContext } from "../AppContext";
 
 export default function CommentForm({ toggleCommentForm }) {
-  const { post, setPost } = useContext(PostContext);
+  const { post } = useContext(PostContext);
   const { posts, setPosts } = useContext(PostsContext);
   const { user } = useContext(UserContext);
 

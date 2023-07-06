@@ -23,12 +23,15 @@ export default function Navbar() {
     });
   };
 
+  //Styles
+
+  const navbarContainerStyles =
+    "flex justify-between bg-slate-600 text-white py-6 px-4 shadow-xl";
+
+  const ulStyle = "flex items-end space-x-6 text-lg border-2 border-green-500";
+
   return user ? (
-    <nav
-      className={
-        "flex justify-between bg-gray-800 text-white py-2 px-4 border-b-4 border-blue-500"
-      }
-    >
+    <nav className={navbarContainerStyles}>
       <Image
         src="/namaka-logo.svg"
         alt="Nakama Logo"
@@ -38,7 +41,7 @@ export default function Navbar() {
         placeholder="blur"
         blurDataURL="/namaka-transparent.svg"
       />
-      <ul className={"flex items-end space-x-6 text-lg"}>
+      <ul className={ulStyle}>
         <li>
           <Link
             href="/"
@@ -80,11 +83,7 @@ export default function Navbar() {
       </ul>
     </nav>
   ) : (
-    <nav
-      className={
-        "flex justify-between bg-gray-800 text-white py-6 px-4 border-b-4 border-blue-500"
-      }
-    >
+    <nav className={navbarContainerStyles}>
       <Image
         src="/namaka-logo.svg"
         alt="Nakama Logo"
