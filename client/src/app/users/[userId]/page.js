@@ -57,15 +57,21 @@ export default function UserPage() {
     return null;
   }
 
+  const containerStyles =
+    "flex flex-col bg-slate-600 rounded-md max-w-xl mx-6 p-8 mt-16 mb-16 shadow-2xl sm:mx-auto md:mx-auto";
+  const buttonStyles =
+    "bg-red-500 hover:bg-red-600 transition duration-200 ease-in-out text-white font-bold py-2 px-4 rounded";
+
   return (
-    <main className="flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-16 mb-16 bg-gray-800 text-white">
-      <h1 className="text-3xl font-bold mt-8 mb-6">Hello, {user.first_name}</h1>
-      <button
-        onClick={toggleAddForm}
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
-      >
-        Add Aquarium
-      </button>
+    <main className={containerStyles}>
+      <h1 className="text-3xl text-white text-center font-bold mt-2 mb-6">
+        Hello, {user.first_name}
+      </h1>
+      <div className={"text-center"}>
+        <button onClick={toggleAddForm} className={buttonStyles}>
+          Add Aquarium
+        </button>
+      </div>
       {user.aquariums.length > 0 ? (
         <ul>
           {user.aquariums.map((aquarium) => (
@@ -94,7 +100,7 @@ export default function UserPage() {
                 </p>
                 <div className="flex">
                   <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
+                    className={buttonStyles}
                     onClick={() =>
                       setAquarium(aquarium) &
                       router.push(`/users/${user.id}/aquariums/${aquarium.id}`)
@@ -103,13 +109,13 @@ export default function UserPage() {
                     View
                   </button>
                   <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 ml-2"
+                    className={buttonStyles}
                     onClick={() => toggleEditForm(aquarium)}
                   >
                     Edit
                   </button>
                   <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 ml-2"
+                    className={buttonStyles}
                     onClick={() => handleDelete(aquarium)}
                   >
                     Delete
@@ -120,7 +126,9 @@ export default function UserPage() {
           ))}
         </ul>
       ) : (
-        <p className="text-lg mt-8">You currently have no aquariums.</p>
+        <p className="text-lg text-white text-center mt-6">
+          You currently have no aquariums.
+        </p>
       )}
       {user.shared_aquariums.length > 0 && (
         <>
@@ -153,7 +161,7 @@ export default function UserPage() {
                     {sharedAquarium.aquarium.volume} gallons
                   </p>
                   <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
+                    className={buttonStyles}
                     onClick={() =>
                       setAquarium(sharedAquarium.aquarium) &
                       router.push(
