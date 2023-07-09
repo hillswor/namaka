@@ -23,9 +23,6 @@ export default function Posts() {
 
   return (
     <main className="p-24">
-      <h1 className="text-gray-800 text-4xl text-center font-bold mb-8">
-        Message Board
-      </h1>
       {commentForm && (
         <CommentForm toggleCommentForm={toggleCommentForm} setPost={setPost} />
       )}
@@ -34,7 +31,7 @@ export default function Posts() {
           posts.map((post) => (
             <article
               key={post.id}
-              className="bg-gray-800 border-4 border-blue-500 rounded-md p-12 mb-16"
+              className="bg-slate-500 rounded-md shadow-2xl p-8 mb-16"
             >
               <header className="mb-4">
                 <h2 className="text-xl font-bold">{post.title}</h2>
@@ -48,7 +45,7 @@ export default function Posts() {
               </footer>
               <button
                 onClick={() => handleReplyClick(post)}
-                className="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-400 mt-4 transition-all duration-200"
+                className="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-400 mt-4 transition-all duration-200"
               >
                 Reply
               </button>

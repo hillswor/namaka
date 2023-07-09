@@ -57,10 +57,19 @@ export default function LoginForm() {
     },
   });
 
+  //Styles
+
+  const labelStyles = "text-white text-lg mb-2";
+  const inputStyles =
+    "bg-white text-slate-600 rounded-lg px-4 py-2 mb-2 w-full";
+  const errorStyles = "text-red-400 mb-2 rounded text-xs";
+  const buttonStyles =
+    "bg-red-500 hover:bg-red-600 transition duration-200 ease-in-out text-white font-bold py-2 px-4 rounded";
+
   return (
     <section>
       <form handleSubmit={handleSubmit}>
-        <label htmlFor="email" className={"text-white text-lg mb-2"}>
+        <label htmlFor="email" className={labelStyles}>
           Email Address
         </label>
         <input
@@ -71,16 +80,14 @@ export default function LoginForm() {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Email Address"
-          className={
-            "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
-          }
+          className={inputStyles}
         />
         {touched.email && errors.email ? (
-          <p className={"text-red-500 mb-2 rounded text-xs"}>{errors.email}</p>
+          <p className={errorStyles}>{errors.email}</p>
         ) : (
           <div className="h-6"></div>
         )}
-        <label htmlFor="password" className={"block text-white text-lg mb-2"}>
+        <label htmlFor="password" className={labelStyles}>
           Password
         </label>
         <input
@@ -91,26 +98,16 @@ export default function LoginForm() {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="Password"
-          className={
-            "border-2 border-blue-500 bg-gray-700 text-white rounded-lg px-4 py-2 mb-2 w-full"
-          }
+          className={inputStyles}
         />
         {touched.password && errors.password ? (
-          <p className={"text-red-500 mb-2 rounded text-xs"}>
-            {errors.password}
-          </p>
+          <p className={errorStyles}>{errors.password}</p>
         ) : (
           <div className="h-6"></div>
         )}
 
         <div className={"flex flex-col items-center"}>
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className={
-              "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            }
-          >
+          <button type="submit" onClick={handleSubmit} className={buttonStyles}>
             Submit
           </button>
         </div>
