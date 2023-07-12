@@ -26,7 +26,7 @@ export default function Navbar() {
   //Styles
 
   const navbarContainerStyle =
-    "flex justify-between sticky top-0 bg-slate-600 text-white py-2 px-4 shadow-xl";
+    "flex justify-between sticky top-0 z-10 bg-slate-600 text-white py-2 px-4 shadow-xl";
 
   const ulStyle = "flex items-end space-x-6";
   const liStyle =

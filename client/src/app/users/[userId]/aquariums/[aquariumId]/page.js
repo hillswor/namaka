@@ -25,17 +25,11 @@ export default function AquariumPage() {
   };
 
   const imgStyling =
-    "rounded-lg shadow-lg transform transition duration-500 mt-5 mb-3 border-2 border-white";
-  const buttonStyling =
-    "bg-blue-500 text-white px-4 py-2 rounded-md hover:text-gray-800 transition-all duration-200 border-2 border-white hover:border-gray-800";
-  const formStyling =
-    "flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-8 bg-gray-800 text-white";
-  const labelStyling = "block text-blue-400 text-lg mb-2";
-  const inputStyling =
-    "border-4 border-blue-500 rounded-md px-4 py-2 mb-4 w-full text-gray-800";
-  const errorStyling = "bg-red-600 text-white p-2 mb-2 rounded";
-  const mainStyling =
-    "flex flex-col items-center justify-center border-4 border-blue-500 rounded-md max-w-xl m-auto p-8 mt-16 bg-gray-800 text-white";
+    "rounded-lg shadow-lg transform transition duration-500 mt-5 mb-3";
+  const mainStyles =
+    "flex flex-col bg-slate-600 rounded-md max-w-xl mx-6 p-8 mt-16 mb-16 shadow-2xl sm:mx-auto md:mx-auto";
+  const buttonStyles =
+    "bg-red-500 hover:bg-red-600 transition duration-200 ease-in-out text-white font-bold py-2 px-4 rounded";
   const chartStyling =
     "flex flex-col items-center justify-center mt-4 mb-4 bg-gray-200 p-2 rounded-md";
   const chartContainerStyling =
@@ -196,15 +190,12 @@ export default function AquariumPage() {
   return parameterForm ? (
     <ParmatersForm toggleParameterForm={toggleParameterForm} />
   ) : (
-    <main className={mainStyling}>
-      <button
-        onClick={() => router.back()}
-        className={
-          "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200"
-        }
-      >
-        Back
-      </button>
+    <main className={mainStyles}>
+      <div className="text-center mb-4">
+        <button onClick={() => router.back()} className={buttonStyles}>
+          Back
+        </button>
+      </div>
       <Image
         src="/reef-tank.jpeg"
         alt="Reef Tank"
@@ -214,20 +205,17 @@ export default function AquariumPage() {
       />
       <h1>{aquarium.brand}</h1>
       <p>{aquarium.model}</p>
-      <button
-        className={
-          "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 mt-2"
-        }
-        onClick={toggleParameterForm}
-      >
-        Log Parameters
-      </button>
+      <div className="text-center">
+        <button className={buttonStyles} onClick={toggleParameterForm}>
+          Log Parameters
+        </button>
+      </div>
       <div className={chartContainerStyling}>
         <div className={toggleButtonContainerStyling}>
           <button
             onClick={previousChart}
             className={
-              "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 mr-4"
+              "bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all duration-200 mr-4"
             }
           >
             {"<"}
@@ -244,7 +232,7 @@ export default function AquariumPage() {
           <button
             onClick={nextChart}
             className={
-              "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-all duration-200 ml-4"
+              "bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all duration-200 ml-4"
             }
           >
             {">"}

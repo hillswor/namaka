@@ -77,7 +77,7 @@ export default function UserPage() {
           {user.aquariums.map((aquarium) => (
             <li
               key={aquarium.id}
-              className="flex items-center justify-between space-x-4 border-2 border-blue-500 rounded-lg p-2 mt-4 bg-gray-200 text-blue-500"
+              className="flex items-center justify-between space-x-4 rounded-lg p-2 mt-4 bg-gray-200 text-blue-500"
             >
               <figure className="flex-shrink-0">
                 <Image
@@ -109,7 +109,7 @@ export default function UserPage() {
                     View
                   </button>
                   <button
-                    className={buttonStyles}
+                    className={`${buttonStyles} mx-2`}
                     onClick={() => toggleEditForm(aquarium)}
                   >
                     Edit

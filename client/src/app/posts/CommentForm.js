@@ -63,7 +63,7 @@ export default function CommentForm({ toggleCommentForm }) {
   });
 
   return (
-    <main className="fixed inset-0 flex items-center justify-center">
+    <main className="fixed inset-0 flex items-center justify-center border-4 border-green-500">
       <div className="bg-gray-800 w-96 p-8 rounded-md border-4 border-blue-500">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
